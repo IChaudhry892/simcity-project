@@ -10,20 +10,20 @@ bool Region::readConfigFile(){
 
     ifstream configFile(configFileName);
     if (!configFile.is_open()){
-        cout << "Could not open config file." << endl;
+        cout << "Could not open config file: " << configFileName << "." << endl;
         return false;
     }
     if (configFile.is_open()){
         string line;
         while(getline(configFile, line)){
-            if (line.find("Region Layout: ") != string::npos){
-                regionFile = line.substr(line.find(": ") + 1);
+            if (line.find("Region Layout:") != string::npos){
+                regionFile = line.substr(line.find(":") + 2);
             }
-            if (line.find("Time Limit: ") != string::npos){
-                timeLimit = stoi(line.substr(line.find(": ") + 1));
+            if (line.find("Time Limit:") != string::npos){
+                timeLimit = stoi(line.substr(line.find(":") + 2));
             }
-            if (line.find("Refresh Rate: ") != string::npos){
-                refreshRate = stoi(line.substr(line.find(": ") + 1));
+            if (line.find("Refresh Rate:") != string::npos){
+                refreshRate = stoi(line.substr(line.find(":") + 2));
             }
         }
         configFile.close();
@@ -34,7 +34,7 @@ bool Region::readConfigFile(){
 bool Region::readRegionInitial(){
     ifstream regionFileStream(regionFile);
     if (!regionFileStream.is_open()){
-        cout << "Could not open config file." << endl;
+        cout << "Could not open region file: " << regionFile << endl;
         return false;
     }
     if (regionFileStream.is_open()){

@@ -1,11 +1,17 @@
+#ifndef REGION_H
+#define REGION_H
+
 #include <vector>
+#include <string>
 class Region{
-    string regionFile;
+    std::string regionFile;
     int timeLimit;
     int refreshRate;
-    vector<vector<char>> regionLayout;
+    std::vector<std::vector<char>> regionLayout;
 public:
     bool readConfigFile();
     bool readRegionInitial();
 
 };
+
+#endif
