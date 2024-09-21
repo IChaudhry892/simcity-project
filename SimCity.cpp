@@ -1,9 +1,9 @@
-#include "Region.h"
+#include "SimCity.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
 
-bool Region::readConfigFile(){
+bool SimCity::readConfigFile(){
     string configFileName;
     cout << "Enter config file name: ";
     cin >> configFileName;
@@ -31,7 +31,7 @@ bool Region::readConfigFile(){
     return true;
 }
 
-bool Region::readRegionInitial(){
+bool SimCity::readRegionInitial(){
     ifstream regionFileStream(regionFile);
     if (!regionFileStream.is_open()){
         cout << "Could not open region file: " << regionFile << endl;

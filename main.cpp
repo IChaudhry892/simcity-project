@@ -1,7 +1,9 @@
-#include "Region.h"
+#include "SimCity.h"
+#include <iostream>
+using namespace std;
 
 int main(){
-    Region city;
+    SimCity city;
     city.readConfigFile();
     city.readRegionInitial();
 
