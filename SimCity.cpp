@@ -41,7 +41,7 @@ bool SimCity::readRegionInitial(){
         string line;
         while(getline(regionFileStream, line)){
             vector<char> row;
-            for(char cell : row){
+            for(char cell : line){
                 if (cell != ' ' && cell != ','){
                     row.push_back(cell);
                 }
@@ -52,4 +52,14 @@ bool SimCity::readRegionInitial(){
         regionFileStream.close();
     }
     return true;
+}
+
+int SimCity::getTimeLimit(){
+    return timeLimit;
+}
+int SimCity::getRefreshRate(){
+    return refreshRate;
+}
+std::vector<std::vector<char>> SimCity::getRegionLayout(){
+    return regionLayout;
 }

@@ -12,6 +12,9 @@ class SimCity{
 public:
     bool readConfigFile();
     bool readRegionInitial();
+    int getTimeLimit();
+    int getRefreshRate();
+    std::vector<std::vector<char>> getRegionLayout();
 
 };
 
