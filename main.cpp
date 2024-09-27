@@ -13,13 +13,16 @@ int main(){
     cout << "Time limit: " << timeLimit << endl;
     cout << "Refresh rate: " << refreshRate << endl;
 
-    cout << "Region Layout:" << endl;
-    for (int i = 0; i < region.size(); i++){
-        for (int j = 0; j < region[i].size(); j++){
-            cout << region[i][j] << "\t";
-        }
-        cout << endl;
-    }
+    // cout << "Region Layout:" << endl;
+    // for (int i = 0; i < region.size(); i++){
+    //     for (int j = 0; j < region[i].size(); j++){
+    //         cout << region[i][j] << "\t";
+    //     }
+    //     cout << endl;
+    // }
+
+    vector<vector<MapObject*>> intialRegion = city.initializeRegion();
+    city.displayRegion();
 
 
     return 0;

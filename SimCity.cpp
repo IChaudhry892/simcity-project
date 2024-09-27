@@ -1,4 +1,13 @@
 #include "SimCity.h"
+#include "MapObject.h"
+#include "Zone.h"
+#include "Road.h"
+#include "PowerPlant.h"
+#include "Powerline.h"
+#include "RoadPowerline.h"
+#include "ResidentialZone.h"
+#include "IndustrialZone.h"
+#include "CommercialZone.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -62,4 +71,40 @@ int SimCity::getRefreshRate(){
 }
 std::vector<std::vector<char>> SimCity::getRegionLayout(){
     return regionLayout;
+}
+
+std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){
+    for (int i = 0; i < regionLayout.size(); i++){
+        vector<MapObject*> regionRow;
+        for (int j = 0; j < regionLayout.size(); j++){
+            char cell = regionLayout[i][j];
+            if (cell == '-'){
+                regionRow.push_back(new Road());
+            } else if (cell == 'P'){
+                regionRow.push_back(new PowerPlant());
+            } else if (cell == 'T'){
+                regionRow.push_back(new Powerline());
+            } else if (cell == '#'){
+                regionRow.push_back(new RoadPowerline());
+            } else if (cell == 'R'){
+                regionRow.push_back(new ResidentialZone());
+            } else if (cell == 'I'){
+                regionRow.push_back(new IndustrialZone());
+            } else if (cell == 'C'){
+                regionRow.push_back(new CommercialZone());
+            }
+        }
+        region.push_back(regionRow);
+    }
+    return region;
+}
+
+void SimCity::displayRegion(){
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region.size(); j++){
+            MapObject* cell = region[i][j];
+            cout << cell->getType() << "\t";
+        }
+        cout << endl;
+    }
 }
