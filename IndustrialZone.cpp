@@ -1,8 +1,8 @@
 #include "IndustrialZone.h"
 
-IndustrialZone::IndustrialZone() : Zone('I', 0, 0) {}
+IndustrialZone::IndustrialZone() : Zone('I', 0) {}
 
-IndustrialZone::IndustrialZone(int pop, int pol) : Zone('I', pop, pol) {}
+IndustrialZone::IndustrialZone(int pop) : Zone('I', pop) {}
 
 char IndustrialZone::getType() const{
     return type;
@@ -10,8 +10,4 @@ char IndustrialZone::getType() const{
 
 int IndustrialZone::getPopulation() const{
     return population;
-}
-
-int IndustrialZone::getPollution() const{
-    return pollution;
 }

@@ -9,6 +9,9 @@ class SimCity{
     std::string regionFile;
     int timeLimit;
     int refreshRate;
+    int availableWorkers;
+    int availableGoods;
+
     std::vector<std::vector<char>> regionLayout;
     std::vector<std::vector<MapObject*>> region;
 
@@ -21,6 +24,14 @@ public:
     std::vector<std::vector<MapObject*>> initializeRegion();
     void displayRegion();
 
+    //for debugging
+    void displayRegionPopulation();
+    void displayRegionPollution();
+
+    int getAvailableWorkers() const;
+    int getAvailableGoods() const;
+    void updateAvailableWorkers(int amount);
+    void updateAvailableGoods(int amount);
 };
 
 #endif

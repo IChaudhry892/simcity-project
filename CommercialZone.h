@@ -3,9 +3,8 @@
 class CommercialZone : public Zone{
 public:
     CommercialZone();
-    CommercialZone(int pop, int pol);
+    CommercialZone(int pop);
 
     char getType() const override;
     int getPopulation() const override;
-    int getPollution() const override;
 };

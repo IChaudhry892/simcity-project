@@ -1,8 +1,8 @@
 #include "CommercialZone.h"
 
-CommercialZone::CommercialZone() : Zone('C', 0, 0) {}
+CommercialZone::CommercialZone() : Zone('C', 0) {}
 
-CommercialZone::CommercialZone(int pop, int pol) : Zone('C', pop, pol) {}
+CommercialZone::CommercialZone(int pop) : Zone('C', pop) {}
 
 char CommercialZone::getType() const{
     return type;
@@ -10,8 +10,4 @@ char CommercialZone::getType() const{
 
 int CommercialZone::getPopulation() const{
     return population;
-}
-
-int CommercialZone::getPollution() const{
-    return pollution;
 }

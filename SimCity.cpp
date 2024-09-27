@@ -12,6 +12,8 @@
 #include <fstream>
 using namespace std;
 
+SimCity::SimCity() : availableWorkers(0), availableGoods(0) {}
+
 bool SimCity::readConfigFile(){
     string configFileName;
     cout << "Enter config file name: ";
@@ -76,7 +78,7 @@ std::vector<std::vector<char>> SimCity::getRegionLayout(){
 std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){
     for (int i = 0; i < regionLayout.size(); i++){
         vector<MapObject*> regionRow;
-        for (int j = 0; j < regionLayout.size(); j++){
+        for (int j = 0; j < regionLayout[i].size(); j++){
             char cell = regionLayout[i][j];
             if (cell == '-'){
                 regionRow.push_back(new Road());
@@ -92,6 +94,8 @@ std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){
                 regionRow.push_back(new IndustrialZone());
             } else if (cell == 'C'){
                 regionRow.push_back(new CommercialZone());
+            } else{
+                regionRow.push_back(nullptr);
             }
         }
         region.push_back(regionRow);
@@ -107,4 +111,45 @@ void SimCity::displayRegion(){
         }
         cout << endl;
     }
+}
+
+void SimCity::displayRegionPopulation(){
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region.size(); j++){
+            MapObject* cell = region[i][j];
+            Zone* zone = dynamic_cast<Zone*>(cell);
+            if (zone != nullptr){
+                cout << zone->getType() << "(" << zone->getPollution() << ")\t";
+            } else{
+                cout << "-\t";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void SimCity::displayRegionPollution(){
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region.size(); j++){
+            MapObject* cell = region[i][j];
+            cout << cell->getType() << "(" << cell->getPollution() << ")\t";
+        }
+        cout << endl;
+    }
+}
+
+int SimCity::getAvailableWorkers() const{
+    return availableWorkers;
+}
+
+int SimCity::getAvailableGoods() const{
+    return availableGoods;
+}
+
+void SimCity::updateAvailableWorkers(int amount){
+    availableWorkers += amount;
+}
+
+void SimCity::updateAvailableGoods(int amount){
+    availableGoods += amount;
 }

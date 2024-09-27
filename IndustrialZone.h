@@ -3,9 +3,8 @@
 class IndustrialZone : public Zone{
 public:
     IndustrialZone();
-    IndustrialZone(int pop, int pol);
+    IndustrialZone(int pop);
 
     char getType() const override;
     int getPopulation() const override;
-    int getPollution() const override;
 };

@@ -5,15 +5,13 @@
 class Zone : public MapObject{
 protected:
     int population;
-    int pollution;
 
 public:
     Zone();
-    Zone(char t, int pop, int pol);
+    Zone(char t, int pop);
 
     virtual char getType() const = 0;
     virtual int getPopulation() const = 0;
-    virtual int getPollution() const = 0;
 };
 
 #endif

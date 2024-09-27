@@ -3,9 +3,8 @@
 class ResidentialZone : public Zone{
 public:
     ResidentialZone();
-    ResidentialZone(int pop, int pol);
+    ResidentialZone(int pop);
 
     char getType() const override;
     int getPopulation() const override;
-    int getPollution() const override;
 };
