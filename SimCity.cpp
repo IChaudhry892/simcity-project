@@ -104,6 +104,7 @@ std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){
 }
 
 void SimCity::displayRegion(){
+    cout << "Region Map:" << endl;
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region.size(); j++){
             MapObject* cell = region[i][j];
@@ -113,7 +114,29 @@ void SimCity::displayRegion(){
     }
 }
 
+void SimCity::intializeSimulation(){
+    if (!readConfigFile()){
+        cout << "Failed to read the config file. Exiting simulation." << endl;
+        return;
+    }
+
+    if (!readRegionInitial()){
+        cout << "Failed to read the region layout. Exiting simulation." << endl;
+        return;
+    }
+
+    initializeRegion();
+
+    cout << "Simulation initialized successfully." << endl;
+    displayRegion();
+
+    //for debugging
+    displayRegionPopulation();
+    displayRegionPollution();
+}
+
 void SimCity::displayRegionPopulation(){
+    cout << "Region Population Map:" << endl;
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region.size(); j++){
             MapObject* cell = region[i][j];
@@ -129,6 +152,7 @@ void SimCity::displayRegionPopulation(){
 }
 
 void SimCity::displayRegionPollution(){
+    cout << "Region Pollution Map:" << endl;
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region.size(); j++){
             MapObject* cell = region[i][j];

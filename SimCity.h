@@ -16,6 +16,8 @@ class SimCity{
     std::vector<std::vector<MapObject*>> region;
 
 public:
+    SimCity();
+
     bool readConfigFile();
     bool readRegionInitial();
     int getTimeLimit();
@@ -23,6 +25,7 @@ public:
     std::vector<std::vector<char>> getRegionLayout();
     std::vector<std::vector<MapObject*>> initializeRegion();
     void displayRegion();
+    void intializeSimulation();
 
     //for debugging
     void displayRegionPopulation();
