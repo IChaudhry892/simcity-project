@@ -6,6 +6,7 @@ int main(){
     SimCity city;
     
     city.intializeSimulation();
+    city.runSimulation();
 
 
     return 0;

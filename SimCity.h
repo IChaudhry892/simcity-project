@@ -26,6 +26,7 @@ public:
     std::vector<std::vector<MapObject*>> initializeRegion();
     void displayRegion();
     void intializeSimulation();
+    void runSimulation();
 
     //for debugging
     void displayRegionPopulation();

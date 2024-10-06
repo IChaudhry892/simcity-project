@@ -108,7 +108,16 @@ void SimCity::displayRegion(){
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region.size(); j++){
             MapObject* cell = region[i][j];
-            cout << cell->getType() << "\t";
+            Zone* zone = dynamic_cast<Zone*>(cell);
+            if (zone != nullptr){
+                if (zone->getPopulation() > 0){
+                    cout << zone->getPopulation() << "\t";
+                } else{
+                    cout << zone->getType() << "\t";
+                }
+            } else{
+                cout << cell->getType() << "\t";
+            }
         }
         cout << endl;
     }
@@ -135,6 +144,27 @@ void SimCity::intializeSimulation(){
     displayRegionPollution();
 }
 
+void SimCity::runSimulation(){
+    for(int step = 0; step < timeLimit; step++){
+        cout << "Time step: " << step + 1 << endl;
+
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[i].size(); j++){
+                Zone* zone = dynamic_cast<Zone*>(region[i][j]);
+                if (zone){
+                    zone->growFunction(region, i, j);
+                }
+            }
+        }
+
+        displayRegionPopulation();
+        
+        if (step % refreshRate == 0){
+            displayRegion();
+        }
+    }
+}
+
 void SimCity::displayRegionPopulation(){
     cout << "Region Population Map:" << endl;
     for (int i = 0; i < region.size(); i++){
@@ -142,9 +172,15 @@ void SimCity::displayRegionPopulation(){
             MapObject* cell = region[i][j];
             Zone* zone = dynamic_cast<Zone*>(cell);
             if (zone != nullptr){
-                cout << zone->getType() << "(" << zone->getPollution() << ")\t";
+                cout << zone->getType() << "(" << zone->getPopulation() << ")\t";
             } else{
-                cout << "-\t";
+                if (cell->getType() == 'T'){
+                    cout << "T\t";
+                } else if (cell->getType() == '#'){
+                    cout << "#\t";
+                } else{
+                    cout << "-\t";
+                }
             }
         }
         cout << endl;

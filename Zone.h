@@ -1,6 +1,7 @@
 #ifndef ZONE_H
 #define ZONE_H
 #include "MapObject.h"
+#include <vector>
 
 class Zone : public MapObject{
 protected:
