@@ -17,5 +17,5 @@ void IndustrialZone::setPopulation(int pop){
     population = pop;
 }
 
-void IndustrialZone::growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y){
+void IndustrialZone::growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y, SimCity& city){
 }

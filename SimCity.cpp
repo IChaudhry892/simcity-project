@@ -147,12 +147,14 @@ void SimCity::intializeSimulation(){
 void SimCity::runSimulation(){
     for(int step = 0; step < timeLimit; step++){
         cout << "Time step: " << step + 1 << endl;
+        cout << "Avaialble workers: " << availableWorkers << endl;
+        cout << "Avaialble goods: " << availableGoods << endl;
 
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
                 Zone* zone = dynamic_cast<Zone*>(region[i][j]);
                 if (zone){
-                    zone->growFunction(region, i, j);
+                    zone->growFunction(region, i, j, *this);
                 }
             }
         }

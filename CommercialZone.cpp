@@ -17,6 +17,6 @@ void CommercialZone::setPopulation(int pop){
     population = pop;
 }
 
-void CommercialZone::growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y){
+void CommercialZone::growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y, SimCity& city){
 
 }

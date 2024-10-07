@@ -3,6 +3,8 @@
 #include "MapObject.h"
 #include <vector>
 
+class SimCity; //forward declare SimCity
+
 class Zone : public MapObject{
 protected:
     int population;
@@ -16,7 +18,7 @@ public:
     virtual void setPopulation(int pop) = 0;
 
     int CountAdjacent(int x, int y, std::vector<std::vector<MapObject*>>& region, int minPopulation);
-    virtual void growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y) = 0;
+    virtual void growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y, SimCity& city) = 0;
 };
 
 #endif

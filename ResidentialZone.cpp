@@ -1,4 +1,5 @@
 #include "ResidentialZone.h"
+#include "SimCity.h"
 #include <vector>
 
 ResidentialZone::ResidentialZone() : Zone('R', 0) {}
@@ -17,12 +18,13 @@ void ResidentialZone::setPopulation(int pop){
     population = pop;
 }
 
-void ResidentialZone::growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y){
+void ResidentialZone::growFunction(std::vector<std::vector<MapObject*>>& region, int x, int y, SimCity& city){
     int adjPop1 = CountAdjacent(x, y, region, 1); //Counts how many adjacent cells have a pop >= 1
     int adjPop2 = CountAdjacent(x, y, region, 2);
     int adjPop3 = CountAdjacent(x, y, region, 3);
     int adjPop4 = CountAdjacent(x, y, region, 4);
     bool PowerlineAdjacent = false;
+    int oldPopulation = getPopulation();
 
     for (int i = -1; i <= 1; i++){
         for (int j = -1; j <= 1; j++){
@@ -48,5 +50,10 @@ void ResidentialZone::growFunction(std::vector<std::vector<MapObject*>>& region,
         setPopulation(4);
     } else if (population == 4 && adjPop4 >= 8){
         setPopulation(5);
+    }
+
+    int newPopulation = getPopulation();
+    if (newPopulation > oldPopulation){
+        city.updateAvailableWorkers(newPopulation - oldPopulation);
     }
 }
