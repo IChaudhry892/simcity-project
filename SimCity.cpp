@@ -155,7 +155,7 @@ void SimCity::runSimulation(){
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
                 Zone* zone = dynamic_cast<Zone*>(region[i][j]);
-                if (zone){
+                if (zone != nullptr){
                     zone->growFunction(region, i, j, *this);
                 }
             }
@@ -172,12 +172,12 @@ void SimCity::runSimulation(){
 void SimCity::displayRegionPopulation(){
     cout << "Region Population Map:" << endl;
     for (int i = 0; i < region.size(); i++){
-        for (int j = 0; j < region.size(); j++){
+        for (int j = 0; j < region[i].size(); j++){
             MapObject* cell = region[i][j];
             Zone* zone = dynamic_cast<Zone*>(cell);
             if (zone != nullptr){
                 cout << zone->getType() << "(" << zone->getPopulation() << ")\t";
-            } else{
+            } else if (cell != nullptr){
                 if (cell->getType() == 'T'){
                     cout << "T\t";
                 } else if (cell->getType() == '#'){
@@ -185,6 +185,8 @@ void SimCity::displayRegionPopulation(){
                 } else{
                     cout << "-\t";
                 }
+            } else{
+                cout << " \t";
             }
         }
         cout << endl;
@@ -194,9 +196,13 @@ void SimCity::displayRegionPopulation(){
 void SimCity::displayRegionPollution(){
     cout << "Region Pollution Map:" << endl;
     for (int i = 0; i < region.size(); i++){
-        for (int j = 0; j < region.size(); j++){
+        for (int j = 0; j < region[i].size(); j++){
             MapObject* cell = region[i][j];
-            cout << cell->getType() << "(" << cell->getPollution() << ")\t";
+            if (cell != nullptr){
+                cout << cell->getType() << "(" << cell->getPollution() << ")\t";
+            } else{
+                cout << " \t";
+            }
         }
         cout << endl;
     }

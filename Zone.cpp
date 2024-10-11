@@ -31,7 +31,7 @@ bool Zone::PowerlineAdjacentCheck(int x, int y, std::vector<std::vector<MapObjec
             int adjY = y + j;
             if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
                 MapObject* adjacent = region[adjX][adjY];
-                if (adjacent->getType() == 'T' || adjacent->getType() == '#'){
+                if (adjacent != nullptr && (adjacent->getType() == 'T' || adjacent->getType() == '#')){
                     return true;
                 }
             }
