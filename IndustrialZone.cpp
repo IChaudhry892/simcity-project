@@ -39,7 +39,7 @@ void IndustrialZone::growFunction(std::vector<std::vector<MapObject*>>& region, 
 
     int newPopulation = getPopulation();
     if (newPopulation > oldPopulation){
-        city.updateAvailableGoods(1);
         city.updateAvailableWorkers(-2);
+        city.updateAvailableGoods(1);
     }
 }

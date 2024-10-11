@@ -23,4 +23,18 @@ void CommercialZone::growFunction(std::vector<std::vector<MapObject*>>& region, 
 
     int availableWorkers = city.getAvailableWorkers();
     int availableGoods = city.getAvailableGoods();
+    int oldPopulation = getPopulation();
+    bool PowerlineAdjacent = PowerlineAdjacentCheck(x, y, region);
+
+    if (population == 0 && (PowerlineAdjacent || adjPop1 >= 1) && availableWorkers >= 1 && availableGoods >= 1){
+        setPopulation(1);
+    } else if (population == 1 && adjPop1 >= 2 && availableWorkers >= 1 && availableGoods >= 1){
+        setPopulation(2);
+    }
+
+    int newPopulation = getPopulation();
+    if (newPopulation > oldPopulation){
+        city.updateAvailableWorkers(-1);
+        city.updateAvailableGoods(-1);
+    }
 }
