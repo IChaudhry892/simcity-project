@@ -106,7 +106,7 @@ std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){
 void SimCity::displayRegion(){
     cout << "Region Map:" << endl;
     for (int i = 0; i < region.size(); i++){
-        for (int j = 0; j < region.size(); j++){
+        for (int j = 0; j < region[i].size(); j++){
             MapObject* cell = region[i][j];
             Zone* zone = dynamic_cast<Zone*>(cell);
             if (zone != nullptr){
@@ -115,8 +115,10 @@ void SimCity::displayRegion(){
                 } else{
                     cout << zone->getType() << "\t";
                 }
-            } else{
+            } else if (cell != nullptr){
                 cout << cell->getType() << "\t";
+            } else{
+                cout << " \t";
             }
         }
         cout << endl;
