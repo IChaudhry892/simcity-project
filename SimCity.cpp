@@ -164,10 +164,21 @@ void SimCity::runSimulation(){
             }
         }
 
+        //count availableGoods at start of timei step
+        int oldAvailableGoods = 0;
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[i].size(); j++){
+                IndustrialZone* zone = dynamic_cast<IndustrialZone*>(region[i][j]);
+                if (zone != nullptr){
+                    oldAvailableGoods += zone->getPopulation();
+                }
+            }
+        }
+
         //create a temporary grid to store new population values
         vector<vector<int>> newPopulations(region.size(), vector<int>(region[0].size(), -1));
 
-        //evalue growth and store results in newPopulations
+        //evaluate growth and store results in newPopulations
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
                 ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
@@ -287,10 +298,23 @@ void SimCity::runSimulation(){
                 }
             }
         }
-        //update availableWorkers if the residential zones' population
+        //update availableWorkers if the residential zones' population increased
         if (newAvailableWorkers > oldAvailableWorkers){
             updateAvailableWorkers(newAvailableWorkers - oldAvailableWorkers);
         }
+
+        //count availableGoods after growth
+        int newAvailableGoods = 0;
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[i].size(); j++){
+                IndustrialZone* zone = dynamic_cast<IndustrialZone*>(region[i][j]);
+                if (zone != nullptr){
+                    newAvailableGoods += zone->getPopulation();
+                }
+            }
+        }
+        //update availableGoods if the industrial zones' population increased
+
         cout << "Avaialble workers after growth: " << availableWorkers << endl;
         cout << "Avaialble goods after growth: " << availableGoods << endl;
         
