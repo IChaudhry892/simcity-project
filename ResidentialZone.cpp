@@ -32,7 +32,7 @@ void ResidentialZone::growFunction(std::vector<std::vector<MapObject*>>& region,
          << ", adjPop1: " << adjPop1
          << ", PowerlineAdjacent: " << PowerlineAdjacent << endl;
 
-    int oldPopulation = getPopulation();
+    // int oldPopulation = getPopulation();
 
     if (population == 0 && (PowerlineAdjacent || adjPop1 >= 1)){
         setPopulation(1);
@@ -46,8 +46,8 @@ void ResidentialZone::growFunction(std::vector<std::vector<MapObject*>>& region,
         setPopulation(5);
     }
 
-    int newPopulation = getPopulation();
-    if (newPopulation > oldPopulation){
-        city.updateAvailableWorkers(newPopulation - oldPopulation);
-    }
+    // int newPopulation = getPopulation();
+    // if (newPopulation > oldPopulation){
+    //     city.updateAvailableWorkers(newPopulation - oldPopulation);
+    // }
 }
