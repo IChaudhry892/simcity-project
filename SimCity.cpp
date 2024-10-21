@@ -164,15 +164,40 @@ void SimCity::runSimulation(){
             }
         }
 
-        // bool growthOcurred = false; //track if growth happens in this time step
+        //create a temporary grid to store new population values
+        vector<vector<int>> newPopulations(region.size(), vector<int>(region[0].size(), -1));
+
+        //evalue growth and store results in newPopulations
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
-                Zone* zone = dynamic_cast<Zone*>(region[i][j]);
+                ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
                 if (zone != nullptr){
-                    zone->growFunction(region, i, j, *this);
+                    int currentPopulation = zone->getPopulation();
+                    int newPopulation = zone->evaluateGrowth(region, i, j, *this);
+                    newPopulations[i][j] = newPopulation;
                 }
             }
         }
+
+        //apply growth from newPopulations to actual region
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[i].size(); j++){
+                ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
+                if (zone != nullptr){
+                    zone->setPopulation(newPopulations[i][j]);
+                }
+            }
+        }
+
+        // bool growthOcurred = false; //track if growth happens in this time step
+        // for (int i = 0; i < region.size(); i++){
+        //     for (int j = 0; j < region[i].size(); j++){
+        //         Zone* zone = dynamic_cast<Zone*>(region[i][j]);
+        //         if (zone != nullptr){
+        //             zone->growFunction(region, i, j, *this);
+        //         }
+        //     }
+        // }
 
         // while (true){
         //     // growthOcurred = false;
