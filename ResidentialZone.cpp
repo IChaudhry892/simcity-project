@@ -1,6 +1,8 @@
 #include "ResidentialZone.h"
 #include "SimCity.h"
 #include <vector>
+#include <iostream>
+using namespace std;
 
 ResidentialZone::ResidentialZone() : Zone('R', 0) {}
 
@@ -25,21 +27,12 @@ void ResidentialZone::growFunction(std::vector<std::vector<MapObject*>>& region,
     int adjPop4 = CountAdjacent(x, y, region, 4);
     // bool PowerlineAdjacent = false;
     bool PowerlineAdjacent = PowerlineAdjacentCheck(x, y, region);
-    int oldPopulation = getPopulation();
 
-    // for (int i = -1; i <= 1; i++){
-    //     for (int j = -1; j <= 1; j++){
-    //         if (i == 0 && j == 0) continue;
-    //         int adjX = x + i;
-    //         int adjY = y + j;
-    //         if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
-    //             MapObject* adjacent = region[adjX][adjY];
-    //             if (adjacent->getType() == 'T' || adjacent->getType() == '#'){
-    //                 PowerlineAdjacent = true;
-    //             }
-    //         }
-    //     }
-    // }
+    cout << "Zone at (" << x << ", " << y << ") - Population: " << population
+         << ", adjPop1: " << adjPop1
+         << ", PowerlineAdjacent: " << PowerlineAdjacent << endl;
+
+    int oldPopulation = getPopulation();
 
     if (population == 0 && (PowerlineAdjacent || adjPop1 >= 1)){
         setPopulation(1);
