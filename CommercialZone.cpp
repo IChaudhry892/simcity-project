@@ -38,3 +38,7 @@ void CommercialZone::growFunction(std::vector<std::vector<MapObject*>>& region, 
     //     city.updateAvailableGoods(-1);
     // }
 }
+
+int CommercialZone::evaluateGrowth(std::vector<std::vector<MapObject*>>& region, int x, int y, SimCity& city){
+    
+}
