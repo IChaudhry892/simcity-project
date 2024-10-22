@@ -164,7 +164,7 @@ void SimCity::runSimulation(){
             }
         }
 
-        //count availableGoods at start of timei step
+        //count availableGoods at start of time step
         int oldAvailableGoods = 0;
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
