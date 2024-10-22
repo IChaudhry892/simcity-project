@@ -178,24 +178,61 @@ void SimCity::runSimulation(){
         //create a temporary grid to store new population values
         vector<vector<int>> newPopulations(region.size(), vector<int>(region[0].size(), -1));
 
-        //evaluate growth and store results in newPopulations
+        // //evaluate growth and store results in newPopulations
+        // for (int i = 0; i < region.size(); i++){
+        //     for (int j = 0; j < region[i].size(); j++){
+        //         ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
+        //         if (zone != nullptr){
+        //             int currentPopulation = zone->getPopulation();
+        //             int newPopulation = zone->evaluateGrowth(region, i, j, *this);
+        //             newPopulations[i][j] = newPopulation;
+        //         }
+        //     }
+        // }
+
+        //evaluate residential growth and store results in newPopulations
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
-                ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
-                if (zone != nullptr){
-                    int currentPopulation = zone->getPopulation();
-                    int newPopulation = zone->evaluateGrowth(region, i, j, *this);
+                ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
+                if (residentialZone != nullptr){
+                    int newPopulation = residentialZone->evaluateGrowth(region, i, j, *this);
                     newPopulations[i][j] = newPopulation;
                 }
             }
         }
 
-        //apply growth from newPopulations to actual region
+        //evaluate industrial growth and store results in newPopulations
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
-                ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
-                if (zone != nullptr){
-                    zone->setPopulation(newPopulations[i][j]);
+                IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
+                if (industrialZone != nullptr){
+                    int newPopulation = industrialZone->evaluateGrowth(region, i, j, *this);
+                    newPopulations[i][j] = newPopulation;
+                }
+            }
+        }
+
+        // //apply growth from newPopulations to actual region
+        // for (int i = 0; i < region.size(); i++){
+        //     for (int j = 0; j < region[i].size(); j++){
+        //         ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
+        //         if (zone != nullptr){
+        //             zone->setPopulation(newPopulations[i][j]);
+        //         }
+        //     }
+        // }
+
+        //apply residential & industrial growth from newPopulations to actual region
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[i].size(); j++){
+                ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
+                if (residentialZone != nullptr && newPopulations[i][j] != -1){
+                    residentialZone->setPopulation(newPopulations[i][j]);
+                }
+
+                IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
+                if (industrialZone != nullptr && newPopulations[i][j] != -1){
+                    industrialZone->setPopulation(newPopulations[i][j]);
                 }
             }
         }
@@ -292,14 +329,14 @@ void SimCity::runSimulation(){
         int newAvailableWorkers = 0;
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
-                ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
-                if (zone != nullptr){
-                    newAvailableWorkers += zone->getPopulation();
+                ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
+                if (residentialZone != nullptr){
+                    newAvailableWorkers += residentialZone->getPopulation();
                 }
             }
         }
         //update availableWorkers if the residential zones' population increased
-        if (newAvailableWorkers > oldAvailableWorkers){
+        if (newAvailableWorkers > oldAvailableWorkers){ //this if statement might be unnecessary
             updateAvailableWorkers(newAvailableWorkers - oldAvailableWorkers);
         }
 
@@ -307,13 +344,14 @@ void SimCity::runSimulation(){
         int newAvailableGoods = 0;
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
-                IndustrialZone* zone = dynamic_cast<IndustrialZone*>(region[i][j]);
-                if (zone != nullptr){
-                    newAvailableGoods += zone->getPopulation();
+                IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
+                if (industrialZone != nullptr){
+                    newAvailableGoods += industrialZone->getPopulation();
                 }
             }
         }
         //update availableGoods if the industrial zones' population increased
+        updateAvailableGoods(newAvailableGoods - oldAvailableGoods);
 
         cout << "Avaialble workers after growth: " << availableWorkers << endl;
         cout << "Avaialble goods after growth: " << availableGoods << endl;
