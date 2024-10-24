@@ -140,6 +140,7 @@ void SimCity::intializeSimulation(){
     initializeRegion();
 
     cout << "Simulation initialized successfully." << endl;
+    cout << "Initial State:" << endl;
     displayRegion();
 
     //for debugging
@@ -152,6 +153,9 @@ void SimCity::runSimulation(){
         cout << "Time step: " << step + 1 << endl;
         cout << "Avaialble workers: " << availableWorkers << endl;
         cout << "Avaialble goods: " << availableGoods << endl;
+
+        //need to stop time steps when citys tops growing
+        bool growthOccurred = false; //set true if population of zones changed
 
         //count availableWorkers at start of time step
         int oldAvailableWorkers = 0;
@@ -196,6 +200,9 @@ void SimCity::runSimulation(){
                 ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
                 if (residentialZone != nullptr){
                     int newPopulation = residentialZone->evaluateGrowth(region, i, j, *this);
+                    if (newPopulation != residentialZone->getPopulation()){
+                        growthOccurred = true;
+                    }
                     newPopulations[i][j] = newPopulation;
                 }
             }
@@ -207,6 +214,9 @@ void SimCity::runSimulation(){
                 CommercialZone* commercialZone = dynamic_cast<CommercialZone*>(region[i][j]);
                 if (commercialZone != nullptr){
                     int newPopulation = commercialZone->evaluateGrowth(region, i, j, *this);
+                    if (newPopulation != commercialZone->getPopulation()){
+                        growthOccurred = true;
+                    }
                     newPopulations[i][j] = newPopulation;
                 }
             }
@@ -218,6 +228,9 @@ void SimCity::runSimulation(){
                 IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
                 if (industrialZone != nullptr){
                     int newPopulation = industrialZone->evaluateGrowth(region, i, j, *this);
+                    if (newPopulation != industrialZone->getPopulation()){
+                        growthOccurred = true;
+                    }
                     newPopulations[i][j] = newPopulation;
                 }
             }
@@ -336,6 +349,7 @@ void SimCity::runSimulation(){
         // }
 
         displayRegionPopulation();
+        displayRegionPollution();
         
         if (step % refreshRate == 0){
             displayRegion();
@@ -352,9 +366,9 @@ void SimCity::runSimulation(){
             }
         }
         //update availableWorkers if the residential zones' population increased
-        if (newAvailableWorkers > oldAvailableWorkers){ //this if statement might be unnecessary
+        // if (newAvailableWorkers > oldAvailableWorkers){ //this if statement might be unnecessary, workers could decrease as well
             updateAvailableWorkers(newAvailableWorkers - oldAvailableWorkers);
-        }
+        // }
 
         //count availableGoods after growth
         int newAvailableGoods = 0;
@@ -369,14 +383,25 @@ void SimCity::runSimulation(){
         //update availableGoods if the industrial zones' population increased
         updateAvailableGoods(newAvailableGoods - oldAvailableGoods);
 
+        // if (availableWorkers != oldAvailableWorkers || availableGoods != oldAvailableGoods){
+        //     growthOccurred = true;
+        // }
+
+        // if (availableWorkers == oldAvailableWorkers && availableGoods == oldAvailableGoods){
+        //     growthOccurred = false;
+        // }
+
         cout << "Avaialble workers after growth: " << availableWorkers << endl;
         cout << "Avaialble goods after growth: " << availableGoods << endl;
         
-        // if (!growthOcurred){
-        //     cout << "Further growth isn't possible. Ending simulation early at time step " << step + 1 << endl;
-        //     break;
-        // }
+        if (!growthOccurred){
+            cout << "Further growth isn't possible. Ending simulation early at time step " << step + 1 << endl;
+            break;
+        }
     }
+
+    cout << "Final State:" << endl;
+    displayRegion();
 }
 
 void SimCity::displayRegionPopulation(){
