@@ -201,6 +201,17 @@ void SimCity::runSimulation(){
             }
         }
 
+        //evaluate commercial growth and store results in newPopulations
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[i].size(); j++){
+                CommercialZone* commercialZone = dynamic_cast<CommercialZone*>(region[i][j]);
+                if (commercialZone != nullptr){
+                    int newPopulation = commercialZone->evaluateGrowth(region, i, j, *this);
+                    newPopulations[i][j] = newPopulation;
+                }
+            }
+        }
+
         //evaluate industrial growth and store results in newPopulations
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
@@ -222,12 +233,17 @@ void SimCity::runSimulation(){
         //     }
         // }
 
-        //apply residential & industrial growth from newPopulations to actual region
+        //apply residential, commercial, & industrial growth from newPopulations to actual region
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
                 ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
                 if (residentialZone != nullptr && newPopulations[i][j] != -1){
                     residentialZone->setPopulation(newPopulations[i][j]);
+                }
+
+                CommercialZone* commercialZone = dynamic_cast<CommercialZone*>(region[i][j]);
+                if (commercialZone != nullptr && newPopulations[i][j] != -1){
+                    commercialZone->setPopulation(newPopulations[i][j]);
                 }
 
                 IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
