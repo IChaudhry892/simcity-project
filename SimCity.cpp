@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <iomanip>
 using namespace std;
 
 SimCity::SimCity() : availableWorkers(0), availableGoods(0) {}
@@ -140,13 +141,13 @@ void SimCity::intializeSimulation(){
     initializeRegion();
 
     cout << "Simulation initialized successfully." << endl;
-    cout << "+========================================+" << endl;
-    cout << "|           SIMCITY SIMULATION           |" << endl;
-    cout << "|========================================|" << endl;
-    cout << "| Initial State:                         |" << endl;
-    cout << "| Available Workers: " << availableWorkers << "                   |" << endl;
-    cout << "| Available Goods: " << availableGoods << "                     |" << endl;
-    cout << "+========================================+" << endl;
+    cout << "+==========================================+" << endl;
+    cout << "|" << setw(42) << left << "           SIMCITY SIMULATION" << "|" << endl;
+    cout << "|==========================================|" << endl;
+    cout << "|" << setw(42) << left << " Initial State:" << "|" << endl;
+    cout << "|" << " Available Workers: " << setw(22) << left << availableWorkers << "|" << endl;
+    cout << "|" << " Available Goods: " << setw(24) << left << availableGoods << "|" << endl;
+    cout << "+==========================================+" << endl;
     cout << endl;
     displayRegion();
 
@@ -160,13 +161,13 @@ void SimCity::runSimulation(){
         // cout << "Time step: " << step + 1 << endl;
         // cout << "Avaialble workers: " << availableWorkers << endl;
         // cout << "Avaialble goods: " << availableGoods << endl;
-        cout << "+========================================+" << endl;
-        cout << "|           SIMCITY SIMULATION           |" << endl;
-        cout << "|========================================|" << endl;
-        cout << "| Time Step: " << step + 1 << "                           |" << endl;
-        cout << "| Available Workers: " << availableWorkers << "                   |" << endl;
-        cout << "| Available Goods: " << availableGoods << "                     |" << endl;
-        cout << "+========================================+" << endl;
+        cout << "\n+==========================================+" << endl;
+        cout << "|" << setw(42) << left << "           SIMCITY SIMULATION" << "|" << endl;
+        cout << "|==========================================|" << endl;
+        cout << "|" << " Time Step: " << setw(30) << left << step + 1 << "|" << endl;
+        cout << "|" << " Available Workers: " << setw(22) << left << availableWorkers << "|" << endl;
+        cout << "|" << " Available Goods: " << setw(24) << left << availableGoods << "|" << endl;
+        cout << "+==========================================+" << endl;
 
         //need to stop time steps when citys tops growing
         bool growthOccurred = false; //set true if population of zones changed
@@ -407,26 +408,28 @@ void SimCity::runSimulation(){
 
         // cout << "Avaialble workers after growth: " << availableWorkers << endl;
         // cout << "Avaialble goods after growth: " << availableGoods << endl;
-        cout << "\n+========================================+" << endl;
-        cout << "| GROWTH RESULTS                         |" << endl;
-        cout << "| Available workers after growth: " << availableWorkers << "      |" << endl;
-        cout << "| Available goods after growth: " << availableGoods << "        |" << endl;
-        cout << "+========================================+" << endl;
+        cout << "+==========================================+" << endl;
+        cout << "|" << setw(42) << left << " GROWTH RESULTS" << "|" << endl;
+        cout << "|" << " Available workers after growth: " << setw(9) << left << availableWorkers << "|" << endl;
+        cout << "|" << " Available goods after growth: " << setw(11) << left << availableGoods << "|" << endl;
+        cout << "+==========================================+" << endl;
         
         // if (!growthOccurred){
         //     cout << "Further growth isn't possible. Ending simulation early at time step " << step + 1 << endl;
         //     break;
         // }
         if (!growthOccurred){
-            cout << "\n+========================================+" << endl;
-            cout << "| No further growth is possible.         |" << endl;
-            cout << "| Ending simulation at time step " << step + 1 << "       |" << endl;
-            cout << "+========================================+" << endl;
+            cout << "\n+==========================================+" << endl;
+            cout << "|" << setw(42) << left << " No further growth is possible." << "|" << endl;
+            cout << "|" << " Ending simulation at time step " << setw(10) << left << step + 1 << "|" << endl;
+            cout << "+==========================================+" << endl;
             break;
         }
     }
 
-    cout << "Final State:" << endl;
+    cout << "\n+==========================================+" << endl;
+    cout << "|" << setw(42) << left << "            FINAL STATE" << "|" << endl;
+    cout << "+==========================================+" << endl;
     displayRegion();
 }
 
