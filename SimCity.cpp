@@ -361,14 +361,13 @@ void SimCity::runSimulation(){
         cout << "\n+==========================================+" << endl;
         cout << "|" << setw(42) << left << " ANALYSIS OF DESIRED AREA" << "|" << endl;
         cout << "+==========================================+" << endl;
-        cout << "+==========================================+" << endl;
         cout << "|" << setw(42) << left << " Enter coordinates of a rectangular area" << "|" << endl;
         cout << "|" << setw(42) << left << " in the region to analyze (y,x)" << "|" << endl;
         cout << "+==========================================+" << endl;
         cout << "|" << setw(42) << left << " Top-Left cell = (0,0)" << "|" << endl;
-        cout << "|" << setw(42) << left << " Bottom-Left cell = (7,0)" << "|" << endl;
-        cout << "|" << setw(42) << left << " Top-Right cell = (0,7)" << "|" << endl;
-        cout << "|" << setw(42) << left << " Bottom-right cell = (7,7)" << "|" << endl;
+        cout << "| Bottom-Left cell = (" << region.size() - 1 << setw(20) << left << ",0)" << "|" << endl;
+        cout << "| Top-Right cell = (0," << region[0].size() - 1 << setw(20) << ")" << "|" << endl;
+        cout << "| Bottom-right cell = (" << region.size() -1 << "," << region[0].size() - 1 << setw(17) << ")" << "|" << endl;
         cout << "+==========================================+" << endl;
 
         int topLeftY, topLeftX, bottomRightY, bottomRightX;
