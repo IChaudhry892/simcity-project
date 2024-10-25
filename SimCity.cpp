@@ -164,6 +164,44 @@ void SimCity::displayFinalRegion(){
     }
 }
 
+void SimCity::displaySpecifiedRegion(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX){
+    cout << "Specified Region Map:" << endl;
+
+    //print x-axis numbers
+    cout << "    ";
+    for (int j = topLeftX; j <= bottomRightX; j++){
+        cout << j << "       ";
+    }
+    cout << endl;
+    
+    cout << "   ";
+    for (int j = topLeftX; j <= bottomRightX; j++){
+        cout << "--------";
+    }
+    cout << endl;
+
+    //print region and y-axis numbers
+    for (int i = topLeftY; i <= bottomRightY; i++){
+        cout << i << " | ";
+        for (int j = topLeftX; j <= bottomRightX; j++){
+            MapObject* cell = region[i][j];
+            Zone* zone = dynamic_cast<Zone*>(cell);
+            if (zone != nullptr){
+                if (zone->getPopulation() > 0){
+                    cout << zone->getPopulation() << "       ";
+                } else{
+                    cout << zone->getType() << "       ";
+                }
+            } else if (cell != nullptr){
+                cout << cell->getType() << "       ";
+            } else{
+                cout << "        ";
+            }
+        }
+        cout << endl;
+    }
+}
+
 void SimCity::intializeSimulation(){
     if (!readConfigFile()){
         cout << "Failed to read the config file. Exiting simulation." << endl;
@@ -376,7 +414,7 @@ void SimCity::runSimulation(){
     cout << "\n+==========================================+" << endl;
     cout << "|" << setw(42) << left << "            FINAL REGION STATE" << "|" << endl;
     cout << "+==========================================+" << endl;
-    displayRegion();
+    displayFinalRegion();
     cout << "+==========================================+" << endl;
     cout << "|" << setw(42) << left << " FINAL POPULATION TOTALS" << "|" << endl;
     cout << "|" << " Residential Population: " << setw(17) << left << getTotalResidentialPopulation() << "|" << endl;
@@ -424,13 +462,14 @@ void SimCity::runSimulation(){
             bottomRightX >= 0 && bottomRightX < region[0].size() &&
             bottomRightY >= topLeftY && bottomRightX >= topLeftX){
             cout << "\nValid rectanlge. Coordinates are inside bounds of region." << endl;
+            //output the map of the specified area
+            displaySpecifiedRegion(topLeftY, topLeftX, bottomRightY, bottomRightX);
             break;
         } else{
             cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region or form an invalid rectangle. Please try again." << endl;
         }
     }
 
-    //output the region map of the specified area?
     //get then output the total zone populations of the specified area
 
     //output the pollution map of the specified area?

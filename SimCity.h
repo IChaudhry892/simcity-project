@@ -26,6 +26,7 @@ public:
     std::vector<std::vector<MapObject*>> initializeRegion();
     void displayRegion();
     void displayFinalRegion();
+    void displaySpecifiedRegion(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX);
     void intializeSimulation();
     void runSimulation();
 
