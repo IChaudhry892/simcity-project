@@ -357,18 +357,37 @@ void SimCity::runSimulation(){
     cout << "+==========================================+" << endl;
 
     //prompt user for coordinates of a rectangular region in the city until they enter a valid region, while loop?
-    cout << "\n+==========================================+" << endl;
-    cout << "|" << setw(42) << left << " ANALYSIS OF DESIRED AREA" << "|" << endl;
-    cout << "+==========================================+" << endl;
-    cout << "+==========================================+" << endl;
-    cout << "|" << setw(42) << left << " Enter coordinates of a rectangular area" << "|" << endl;
-    cout << "|" << setw(42) << left << " in the region to analyze (y,x)" << "|" << endl;
-    cout << "+==========================================+" << endl;
-    cout << "|" << setw(42) << left << " Top-Left cell = (0,0)" << "|" << endl;
-    cout << "|" << setw(42) << left << " Bottom-Left cell = (7,0)" << "|" << endl;
-    cout << "|" << setw(42) << left << " Top-Right cell = (0,7)" << "|" << endl;
-    cout << "|" << setw(42) << left << " Bottom-right cell = (7,7)" << "|" << endl;
-    cout << "+==========================================+" << endl;
+    while (true){
+        cout << "\n+==========================================+" << endl;
+        cout << "|" << setw(42) << left << " ANALYSIS OF DESIRED AREA" << "|" << endl;
+        cout << "+==========================================+" << endl;
+        cout << "+==========================================+" << endl;
+        cout << "|" << setw(42) << left << " Enter coordinates of a rectangular area" << "|" << endl;
+        cout << "|" << setw(42) << left << " in the region to analyze (y,x)" << "|" << endl;
+        cout << "+==========================================+" << endl;
+        cout << "|" << setw(42) << left << " Top-Left cell = (0,0)" << "|" << endl;
+        cout << "|" << setw(42) << left << " Bottom-Left cell = (7,0)" << "|" << endl;
+        cout << "|" << setw(42) << left << " Top-Right cell = (0,7)" << "|" << endl;
+        cout << "|" << setw(42) << left << " Bottom-right cell = (7,7)" << "|" << endl;
+        cout << "+==========================================+" << endl;
+
+        int topLeftYCoordinate, topLeftXCoordinate, bottomRightYCooridnate, bottomRightXCoordinate;
+        cout << "\nEnter y-coordinate of top-left corner of desired area (y,x): ";
+        cin >> topLeftYCoordinate;
+        cout << "Enter x-coordinate of top-left corner of desired area (y,x): ";
+        cin >> topLeftXCoordinate;
+        cout << "Enter y-coordinate of bottom-right corner of desired area (y,x): ";
+        cin >> bottomRightYCooridnate;
+        cout << "Enter x-coordinate of bottom-right corner of desired area (y,x): ";
+        cin >> bottomRightXCoordinate;
+        if (topLeftYCoordinate >= 0 && topLeftXCoordinate < region.size() && bottomRightYCooridnate >= 0 && bottomRightYCooridnate < region[0].size()){
+            cout << "Valid rectanlge. Coordinates are inside bounds of region." << endl;
+            break;
+        } else{
+            cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region." << endl;
+        }
+    }
+
 }
 
 void SimCity::displayRegionPopulation(){
