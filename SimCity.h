@@ -25,6 +25,7 @@ public:
     std::vector<std::vector<char>> getRegionLayout();
     std::vector<std::vector<MapObject*>> initializeRegion();
     void displayRegion();
+    void displayFinalRegion();
     void intializeSimulation();
     void runSimulation();
 

@@ -127,6 +127,43 @@ void SimCity::displayRegion(){
     }
 }
 
+void SimCity::displayFinalRegion(){
+    cout << "Region Map:" << endl;
+    //print x-axis numbers
+    cout << "    ";
+    for (int j = 0; j < region[0].size(); j++){
+        cout << j << "       ";
+    }
+    cout << endl;
+    
+    cout << "   ";
+    for (int j = 0; j < region[0].size(); j++){
+        cout << "--------";
+    }
+    cout << endl;
+
+    //print region and y-axis numbers
+    for (int i = 0; i < region.size(); i++){
+        cout << i << " | ";
+        for (int j = 0; j < region[i].size(); j++){
+            MapObject* cell = region[i][j];
+            Zone* zone = dynamic_cast<Zone*>(cell);
+            if (zone != nullptr){
+                if (zone->getPopulation() > 0){
+                    cout << zone->getPopulation() << "       ";
+                } else{
+                    cout << zone->getType() << "       ";
+                }
+            } else if (cell != nullptr){
+                cout << cell->getType() << "       ";
+            } else{
+                cout << "        ";
+            }
+        }
+        cout << endl;
+    }
+}
+
 void SimCity::intializeSimulation(){
     if (!readConfigFile()){
         cout << "Failed to read the config file. Exiting simulation." << endl;
@@ -335,6 +372,7 @@ void SimCity::runSimulation(){
     }
 
     //display final region state and final population totals
+    int totalRegionPopulation = getTotalResidentialPopulation() + getTotalIndustrialPopulation() + getTotalCommercialPopulation();
     cout << "\n+==========================================+" << endl;
     cout << "|" << setw(42) << left << "            FINAL REGION STATE" << "|" << endl;
     cout << "+==========================================+" << endl;
@@ -344,6 +382,7 @@ void SimCity::runSimulation(){
     cout << "|" << " Residential Population: " << setw(17) << left << getTotalResidentialPopulation() << "|" << endl;
     cout << "|" << " Industrial Population: " << setw(18) << left << getTotalIndustrialPopulation() << "|" << endl;
     cout << "|" << " Commercial Population: " << setw(18) << left << getTotalCommercialPopulation() << "|" << endl;
+    cout << "|" << " Total Region Population: " << setw(16) << left << totalRegionPopulation << "|" << endl;
     cout << "+==========================================+" << endl;
 
     //start spreading pollution and display final pollution state w/total pollution value
@@ -363,7 +402,7 @@ void SimCity::runSimulation(){
         cout << "+==========================================+" << endl;
         cout << "|" << setw(42) << left << " Enter coordinates of a rectangular area" << "|" << endl;
         cout << "|" << setw(42) << left << " in the region to analyze (y,x)" << "|" << endl;
-        cout << "+==========================================+" << endl;
+        cout << "+------------------------------------------+" << endl;
         cout << "|" << setw(42) << left << " Top-Left cell = (0,0)" << "|" << endl;
         cout << "| Bottom-Left cell = (" << region.size() - 1 << setw(20) << left << ",0)" << "|" << endl;
         cout << "| Top-Right cell = (0," << region[0].size() - 1 << setw(20) << ")" << "|" << endl;
@@ -390,6 +429,12 @@ void SimCity::runSimulation(){
             cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region or form an invalid rectangle. Please try again." << endl;
         }
     }
+
+    //output the region map of the specified area?
+    //get then output the total zone populations of the specified area
+
+    //output the pollution map of the specified area?
+    //get then output the total pollution of the specified area
 
 }
 
