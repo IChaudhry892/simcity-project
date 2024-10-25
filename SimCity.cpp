@@ -158,9 +158,6 @@ void SimCity::intializeSimulation(){
 
 void SimCity::runSimulation(){
     for(int step = 0; step < timeLimit; step++){
-        // cout << "Time step: " << step + 1 << endl;
-        // cout << "Avaialble workers: " << availableWorkers << endl;
-        // cout << "Avaialble goods: " << availableGoods << endl;
         cout << "\n+==========================================+" << endl;
         cout << "|" << setw(42) << left << "           SIMCITY SIMULATION" << "|" << endl;
         cout << "|==========================================|" << endl;
@@ -196,18 +193,6 @@ void SimCity::runSimulation(){
 
         //create a temporary grid to store new population values
         vector<vector<int>> newPopulations(region.size(), vector<int>(region[0].size(), -1));
-
-        // //evaluate growth and store results in newPopulations
-        // for (int i = 0; i < region.size(); i++){
-        //     for (int j = 0; j < region[i].size(); j++){
-        //         ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
-        //         if (zone != nullptr){
-        //             int currentPopulation = zone->getPopulation();
-        //             int newPopulation = zone->evaluateGrowth(region, i, j, *this);
-        //             newPopulations[i][j] = newPopulation;
-        //         }
-        //     }
-        // }
 
         //evaluate residential growth and store results in newPopulations
         for (int i = 0; i < region.size(); i++){
@@ -251,16 +236,6 @@ void SimCity::runSimulation(){
             }
         }
 
-        // //apply growth from newPopulations to actual region
-        // for (int i = 0; i < region.size(); i++){
-        //     for (int j = 0; j < region[i].size(); j++){
-        //         ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
-        //         if (zone != nullptr){
-        //             zone->setPopulation(newPopulations[i][j]);
-        //         }
-        //     }
-        // }
-
         //apply residential, commercial, & industrial growth from newPopulations to actual region
         for (int i = 0; i < region.size(); i++){
             for (int j = 0; j < region[i].size(); j++){
@@ -281,91 +256,11 @@ void SimCity::runSimulation(){
             }
         }
 
-        // bool growthOcurred = false; //track if growth happens in this time step
-        // for (int i = 0; i < region.size(); i++){
-        //     for (int j = 0; j < region[i].size(); j++){
-        //         Zone* zone = dynamic_cast<Zone*>(region[i][j]);
-        //         if (zone != nullptr){
-        //             zone->growFunction(region, i, j, *this);
-        //         }
-        //     }
-        // }
-
-        // while (true){
-        //     // growthOcurred = false;
-        //     struct GrowthCandidate{
-        //         int x, y, population, adjPop;
-        //         ResidentialZone* zone;
-        //     };
-
-        //     GrowthCandidate bestCandidate = {-1, -1, -1, -1, nullptr};
-
-        //     //search region to find best growth candidate
-        //     for (int i = 0; i < region.size(); i++){
-        //         for (int j = 0; j < region[i].size(); j++){
-        //             ResidentialZone* zone = dynamic_cast<ResidentialZone*>(region[i][j]);
-        //             if (zone != nullptr){
-        //                 int population = zone->getPopulation();
-        //                 // int adjacentPop = zone->CountAdjacent(i, j, region, 1);
-        //                 int adjPop1 = zone->CountAdjacent(i, j, region, 1);
-        //                 int adjPop2 = zone->CountAdjacent(i, j, region, 2);
-        //                 int adjPop3 = zone->CountAdjacent(i, j, region, 3);
-        //                 int adjPop4 = zone->CountAdjacent(i, j, region, 4);
-        //                 int totalAdjPop = (1 * adjPop1) + (2 * adjPop2) + (3 * adjPop3) + (4 * adjPop4);
-
-        //                 //check if zone is growable
-        //                 bool powerlineAdjacent = zone->PowerlineAdjacentCheck(i, j, region);
-        //                 bool canGrow = (population == 0 && (powerlineAdjacent || adjPop1 >= 1)) ||
-        //                                (population == 1 && adjPop1 >= 2) ||
-        //                                (population == 2 && adjPop2 >= 4) ||
-        //                                (population == 3 && adjPop3 >= 6) ||
-        //                                (population == 4 && adjPop4 >= 8);
-
-        //                 if (!canGrow){
-        //                     continue;
-        //                 }
-
-        //                 //compare to find best growth candidate
-        //                 if (population > bestCandidate.population ||
-        //                     (population == bestCandidate.population && totalAdjPop > bestCandidate.adjPop) ||
-        //                     (population == bestCandidate.population && totalAdjPop == bestCandidate.adjPop && i < bestCandidate.x) ||
-        //                     (population == bestCandidate.population && totalAdjPop == bestCandidate.adjPop && i == bestCandidate.x && j < bestCandidate.y)){
-
-        //                     bestCandidate = {i, j, population, totalAdjPop, zone};
-        //                 }
-        //             }
-        //         }
-        //     }
-
-        //     //break loop if no valid candidate is found
-        //     if (bestCandidate.zone == nullptr){
-        //         break;
-        //     }
-
-        //     cout << "Best candidate: (" << bestCandidate.x << ", " << bestCandidate.y 
-        //         << ") - Population: " << bestCandidate.population 
-        //         << ", adjPop: " << bestCandidate.adjPop << endl;
-
-        //     // if (bestCandidate.zone != nullptr){
-        //         int oldPopulation = bestCandidate.zone->getPopulation();
-        //         bestCandidate.zone->growFunction(region, bestCandidate.x, bestCandidate.y, *this);
-        //         int newPopulation = bestCandidate.zone->getPopulation();
-
-        //         //for debugging
-        //         cout << "**** For Debugging ****" << endl;
-        //         displayRegionPopulation();
-
-        //         if (newPopulation > oldPopulation){
-        //             growthOcurred = true; //growth happened if population increased
-        //         } else{
-        //             break; //no growth, stop further checks
-        //         }
-        //     // }
-        // }
-
+        cout << "**** FOR DEBUGGING ****" << endl;
         displayRegionPopulation();
         displayRegionPollution();
-        
+        cout << "**** FOR DEBUGGING ****" << endl;
+
         if (step % refreshRate == 0){
             displayRegion();
         }
@@ -398,26 +293,12 @@ void SimCity::runSimulation(){
         //update availableGoods if the industrial zones' population increased
         updateAvailableGoods(newAvailableGoods - oldAvailableGoods);
 
-        // if (availableWorkers != oldAvailableWorkers || availableGoods != oldAvailableGoods){
-        //     growthOccurred = true;
-        // }
-
-        // if (availableWorkers == oldAvailableWorkers && availableGoods == oldAvailableGoods){
-        //     growthOccurred = false;
-        // }
-
-        // cout << "Avaialble workers after growth: " << availableWorkers << endl;
-        // cout << "Avaialble goods after growth: " << availableGoods << endl;
         cout << "+==========================================+" << endl;
         cout << "|" << setw(42) << left << " GROWTH RESULTS" << "|" << endl;
         cout << "|" << " Available workers after growth: " << setw(9) << left << availableWorkers << "|" << endl;
         cout << "|" << " Available goods after growth: " << setw(11) << left << availableGoods << "|" << endl;
         cout << "+==========================================+" << endl;
         
-        // if (!growthOccurred){
-        //     cout << "Further growth isn't possible. Ending simulation early at time step " << step + 1 << endl;
-        //     break;
-        // }
         if (!growthOccurred){
             cout << "\n+==========================================+" << endl;
             cout << "|" << setw(42) << left << " No further growth is possible." << "|" << endl;
