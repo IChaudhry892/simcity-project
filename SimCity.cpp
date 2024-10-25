@@ -408,7 +408,13 @@ void SimCity::spreadPollution(){
     //for debugging
     cout << "**** FOR DEBUGGING ****" << endl;
     cout << "INITIAL POLLUTION MAP:" << endl;
-    displayRegionPollution();
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region[i].size(); j++){
+            int cell = pollutionMap[i][j];
+            cout << cell << "\t";
+        }
+        cout << endl;
+    }
     cout << "**** FOR DEBUGGING ****" << endl;
 
     //spread pollution
