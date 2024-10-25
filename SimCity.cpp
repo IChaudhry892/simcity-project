@@ -393,49 +393,95 @@ void SimCity::displayRegionPollution(){
 
 void SimCity::spreadPollution(){
     //create a grid to store industrial zone pollution values
-    vector<vector<int>> pollutionMap(region.size(), vector<int>(region[0].size(), 0));
+    // vector<vector<int>> pollutionMap(region.size(), vector<int>(region[0].size(), 0));
 
-    //add industrial zone population to pollutionMap
+    // //add industrial zone population to pollutionMap
+    // for (int i = 0; i < region.size(); i++){
+    //     for (int j = 0; j < region[i].size(); j++){
+    //         IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
+    //         if (industrialZone != nullptr){
+    //             pollutionMap[i][j] = industrialZone->getPopulation();
+    //         }
+    //     }
+    // }
+    //new approach, modify actual regions pollution values instead of making a separate grid
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region[i].size(); j++){
-            IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
-            if (industrialZone != nullptr){
-                pollutionMap[i][j] = industrialZone->getPopulation();
+            MapObject* cell = region[i][j];
+            if (cell != nullptr){
+                IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(cell);
+                if (industrialZone != nullptr){
+                    cell->setPollution(industrialZone->getPopulation());
+                }
             }
         }
     }
 
     //for debugging
+    // cout << "**** FOR DEBUGGING ****" << endl;
+    // cout << "INITIAL POLLUTION MAP:" << endl;
+    // for (int i = 0; i < region.size(); i++){
+    //     for (int j = 0; j < region[i].size(); j++){
+    //         int cell = pollutionMap[i][j];
+    //         cout << cell << "\t";
+    //     }
+    //     cout << endl;
+    // }
+    // cout << "**** FOR DEBUGGING ****" << endl;
     cout << "**** FOR DEBUGGING ****" << endl;
     cout << "INITIAL POLLUTION MAP:" << endl;
-    for (int i = 0; i < region.size(); i++){
-        for (int j = 0; j < region[i].size(); j++){
-            int cell = pollutionMap[i][j];
-            cout << cell << "\t";
-        }
-        cout << endl;
-    }
+    displayRegionPollution();
     cout << "**** FOR DEBUGGING ****" << endl;
 
     //spread pollution
+    // for (int i = 0; i < region.size(); i++){
+    //     for (int j = 0; j < region[i].size(); j++){
+    //         if (pollutionMap[i][j] > 0){ //if this cell is polluted
+    //             int pollutionSource = pollutionMap[i][j];
+
+    //             //check all adjacent cells
+    //             for (int i2 = -1; i2 <= 1; i2++){
+    //                 for (int j2 = -1; j2 <= 1; j2++){
+    //                     if (i2 == 0 && j2 == 0) continue;
+    //                     int adjX = i + i2;
+    //                     int adjY = j + j2;
+    //                     //check if adjacent cell is within bounds
+    //                     if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
+    //                         MapObject* adjacentCell = region[adjX][adjY];
+    //                         if (adjacentCell != nullptr){
+    //                             int spreadPollution = pollutionSource - 1; //pollution around source is 1 less than pollution at source
+    //                             if (spreadPollution > adjacentCell->getPollution()){
+    //                                 adjacentCell->setPollution(spreadPollution);
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region[i].size(); j++){
-            if (pollutionMap[i][j] > 0){ //if this cell is polluted
-                int pollutionSource = pollutionMap[i][j];
+            MapObject* cell = region[i][j];
+            if (cell != nullptr){
+                IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(cell);
+                if (industrialZone != nullptr && industrialZone->getPopulation() > 0){ //if this cell is polluted
+                    int sourcePollution = industrialZone->getPopulation();
 
-                //check all adjacent cells
-                for (int i2 = -1; i2 <= 1; i2++){
-                    for (int j2 = -1; j2 <= 1; j2++){
-                        if (i2 == 0 && j2 == 0) continue;
-                        int adjX = i + i2;
-                        int adjY = j + j2;
-                        //check if adjacent cell is within bounds
-                        if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
-                            MapObject* adjacentCell = region[adjX][adjY];
-                            if (adjacentCell != nullptr){
-                                int spreadPollution = pollutionSource - 1; //pollution around source is 1 less than pollution at source
-                                if (spreadPollution > adjacentCell->getPollution()){
-                                    adjacentCell->setPollution(spreadPollution);
+                    //check all adjacent cells
+                    for (int i2 = -1; i2 <= 1; i2++){
+                        for (int j2 = -1; j2 <= 1; j2++){
+                            if (i2 == 0 && j2 == 0) continue;
+                            int adjX = i + i2;
+                            int adjY = j + j2;
+                            //check if adjacent cell is within bounds
+                            if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
+                                MapObject* adjacentCell = region[adjX][adjY];
+                                if (adjacentCell != nullptr){
+                                    int spreadPollution = sourcePollution - 1; //pollution around source is 1 less than pollution at source
+                                    if (spreadPollution > adjacentCell->getPollution()){
+                                        adjacentCell->setPollution(spreadPollution);
+                                    }
                                 }
                             }
                         }
