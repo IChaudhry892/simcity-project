@@ -425,6 +425,32 @@ void SimCity::runSimulation(){
             cout << "+==========================================+" << endl;
             break;
         }
+
+        //ask user to continue to next time step or quit program
+        while (true){
+            cout << "\n+==========================================+" << endl;
+            cout << "|" << setw(42) << left << " Enter 'c' to continue to next time step" << "|" << endl;
+            cout << "|" << setw(42) << left << " Enter 'q' to quit simulation" << "|" << endl;
+            cout << "+==========================================+" << endl;
+
+            char choice;
+            cin >> choice;
+            cin.ignore();
+
+            if (choice == 'q' || choice == 'Q'){
+                cout << "\n+==========================================+" << endl;
+                cout << "|" << setw(42) << left << " Simulation terminated by user" << "|" << endl;
+                cout << "|" << " At time step: " << setw(27) << left << step + 1 << "|" << endl;
+                cout << "+==========================================+" << endl;
+                return;
+            } else if (choice == 'c' || choice == 'C'){
+                break; //should break while loop and continue to next time step
+            } else{
+                cout << "\n+==========================================+" << endl;
+                cout << "|" << setw(42) << left << " Invalid choice, try again." << "|" << endl;
+                cout << "+==========================================+" << endl;
+            }
+        }
     }
 
     cout << "\n+==========================================+" << endl;
