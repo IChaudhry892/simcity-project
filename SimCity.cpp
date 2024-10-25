@@ -347,9 +347,12 @@ void SimCity::runSimulation(){
 
     spreadPollution();
     cout << "\n+==========================================+" << endl;
-    cout << "|" << setw(42) << left << "            FINAL POLLUTION STATE" << "|" << endl;
+    cout << "|" << setw(42) << left << "          FINAL POLLUTION STATE" << "|" << endl;
     cout << "+==========================================+" << endl;
     displayRegionPollution();
+    cout << "+==========================================+" << endl;
+    cout << "|" << " Total Pollution: " << setw(24) << left << getTotalPollution() << "|" << endl;
+    cout << "+==========================================+" << endl;
 }
 
 void SimCity::displayRegionPopulation(){
@@ -466,7 +469,7 @@ void SimCity::spreadPollution(){
             if (cell != nullptr){
                 IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(cell);
                 if (industrialZone != nullptr && industrialZone->getPopulation() > 0){ //if this cell is polluted
-                    int sourcePollution = industrialZone->getPopulation();
+                    int sourcePollution = industrialZone->getPopulation(); //pollution starts at these cells
 
                     //check all adjacent cells
                     for (int i2 = -1; i2 <= 1; i2++){
@@ -490,6 +493,19 @@ void SimCity::spreadPollution(){
             }
         }
     }
+}
+
+int SimCity::getTotalPollution() const{
+    int totalPollution = 0;
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region[i].size(); j++){
+            MapObject* cell = dynamic_cast<MapObject*>(region[i][j]);
+            if (cell != nullptr){
+                totalPollution += cell->getPollution();
+            }
+        }
+    }
+    return totalPollution;
 }
 
 int SimCity::getTotalResidentialPopulation() const{
