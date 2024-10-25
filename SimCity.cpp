@@ -371,20 +371,24 @@ void SimCity::runSimulation(){
         cout << "|" << setw(42) << left << " Bottom-right cell = (7,7)" << "|" << endl;
         cout << "+==========================================+" << endl;
 
-        int topLeftYCoordinate, topLeftXCoordinate, bottomRightYCooridnate, bottomRightXCoordinate;
+        int topLeftY, topLeftX, bottomRightY, bottomRightX;
         cout << "\nEnter y-coordinate of top-left corner of desired area (y,x): ";
-        cin >> topLeftYCoordinate;
+        cin >> topLeftY;
         cout << "Enter x-coordinate of top-left corner of desired area (y,x): ";
-        cin >> topLeftXCoordinate;
+        cin >> topLeftX;
         cout << "Enter y-coordinate of bottom-right corner of desired area (y,x): ";
-        cin >> bottomRightYCooridnate;
+        cin >> bottomRightY;
         cout << "Enter x-coordinate of bottom-right corner of desired area (y,x): ";
-        cin >> bottomRightXCoordinate;
-        if (topLeftYCoordinate >= 0 && topLeftXCoordinate < region.size() && bottomRightYCooridnate >= 0 && bottomRightYCooridnate < region[0].size()){
-            cout << "Valid rectanlge. Coordinates are inside bounds of region." << endl;
+        cin >> bottomRightX;
+        if (topLeftY >= 0 && topLeftY < region.size() &&
+            topLeftX >= 0 && topLeftX < region[0].size() &&
+            bottomRightY >= 0 && bottomRightY < region.size() &&
+            bottomRightX >= 0 && bottomRightX < region[0].size() &&
+            bottomRightY >= topLeftY && bottomRightX >= topLeftX){
+            cout << "\nValid rectanlge. Coordinates are inside bounds of region." << endl;
             break;
         } else{
-            cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region." << endl;
+            cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region or form an invalid rectangle. Please try again." << endl;
         }
     }
 
