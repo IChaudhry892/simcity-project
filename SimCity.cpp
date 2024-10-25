@@ -334,6 +334,7 @@ void SimCity::runSimulation(){
         }
     }
 
+    //display final region state and final population totals
     cout << "\n+==========================================+" << endl;
     cout << "|" << setw(42) << left << "            FINAL REGION STATE" << "|" << endl;
     cout << "+==========================================+" << endl;
@@ -345,6 +346,7 @@ void SimCity::runSimulation(){
     cout << "|" << " Commercial Population: " << setw(18) << left << getTotalCommercialPopulation() << "|" << endl;
     cout << "+==========================================+" << endl;
 
+    //start spreading pollution and display final pollution state w/total pollution value
     spreadPollution();
     cout << "\n+==========================================+" << endl;
     cout << "|" << setw(42) << left << "          FINAL POLLUTION STATE" << "|" << endl;
@@ -352,6 +354,20 @@ void SimCity::runSimulation(){
     displayRegionPollution();
     cout << "+==========================================+" << endl;
     cout << "|" << " Total Pollution: " << setw(24) << left << getTotalPollution() << "|" << endl;
+    cout << "+==========================================+" << endl;
+
+    //prompt user for coordinates of a rectangular region in the city until they enter a valid region, while loop?
+    cout << "\n+==========================================+" << endl;
+    cout << "|" << setw(42) << left << " ANALYSIS OF DESIRED AREA" << "|" << endl;
+    cout << "+==========================================+" << endl;
+    cout << "+==========================================+" << endl;
+    cout << "|" << setw(42) << left << " Enter coordinates of a rectangular area" << "|" << endl;
+    cout << "|" << setw(42) << left << " in the region to analyze (y,x)" << "|" << endl;
+    cout << "+==========================================+" << endl;
+    cout << "|" << setw(42) << left << " Top-Left cell = (0,0)" << "|" << endl;
+    cout << "|" << setw(42) << left << " Bottom-Left cell = (7,0)" << "|" << endl;
+    cout << "|" << setw(42) << left << " Top-Right cell = (0,7)" << "|" << endl;
+    cout << "|" << setw(42) << left << " Bottom-right cell = (7,7)" << "|" << endl;
     cout << "+==========================================+" << endl;
 }
 
@@ -475,8 +491,8 @@ void SimCity::spreadPollution(){
                     for (int i2 = -1; i2 <= 1; i2++){
                         for (int j2 = -1; j2 <= 1; j2++){
                             if (i2 == 0 && j2 == 0) continue;
-                            int adjX = i + i2;
-                            int adjY = j + j2;
+                            int adjX = i + i2; //checks cells above and below i, i is y-coordinate
+                            int adjY = j + j2; //checks cells to the left and right of j, j is x-coordinate
                             //check if adjacent cell is within bounds
                             if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
                                 MapObject* adjacentCell = region[adjX][adjY];
