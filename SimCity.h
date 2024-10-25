@@ -32,6 +32,10 @@ public:
     void displayRegionPopulation();
     void displayRegionPollution();
 
+    int getTotalResidentialPopulation() const;
+    int getTotalIndustrialPopulation() const;
+    int getTotalCommercialPopulation() const;
+
     int getAvailableWorkers() const;
     int getAvailableGoods() const;
     void updateAvailableWorkers(int amount);

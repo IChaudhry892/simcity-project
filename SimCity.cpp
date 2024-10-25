@@ -379,6 +379,45 @@ void SimCity::displayRegionPollution(){
     }
 }
 
+int SimCity::getTotalResidentialPopulation() const{
+    int totalPop = 0;
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region[i].size(); j++){
+            ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
+            if (residentialZone != nullptr){
+                totalPop += residentialZone->getPopulation();
+            }
+        }
+    }
+    return totalPop;
+}
+
+int SimCity::getTotalIndustrialPopulation() const{
+    int totalPop = 0;
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region[i].size(); j++){
+            IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
+            if (industrialZone != nullptr){
+                totalPop += industrialZone->getPopulation();
+            }
+        }
+    }
+    return totalPop;
+}
+
+int SimCity::getTotalCommercialPopulation() const{
+    int totalPop = 0;
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region[i].size(); j++){
+            CommercialZone* commercialZone = dynamic_cast<CommercialZone*>(region[i][j]);
+            if (commercialZone != nullptr){
+                totalPop += commercialZone->getPopulation();
+            }
+        }
+    }
+    return totalPop;
+}
+
 int SimCity::getAvailableWorkers() const{
     return availableWorkers;
 }
