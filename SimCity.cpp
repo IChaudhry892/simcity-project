@@ -338,6 +338,12 @@ void SimCity::runSimulation(){
     cout << "|" << setw(42) << left << "            FINAL STATE" << "|" << endl;
     cout << "+==========================================+" << endl;
     displayRegion();
+    cout << "+==========================================+" << endl;
+    cout << "|" << setw(42) << left << " FINAL POPULATION TOTALS" << "|" << endl;
+    cout << "|" << " Residential Population: " << setw(17) << left << getTotalResidentialPopulation() << "|" << endl;
+    cout << "|" << " Industrial Population: " << setw(18) << left << getTotalIndustrialPopulation() << "|" << endl;
+    cout << "|" << " Commercial Population: " << setw(18) << left << getTotalCommercialPopulation() << "|" << endl;
+    cout << "+==========================================+" << endl;
 }
 
 void SimCity::displayRegionPopulation(){
