@@ -29,7 +29,7 @@ public:
     void displayFinalRegion();
     void displaySpecifiedRegion(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX);
     void displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX);
-    void intializeSimulation();
+    bool intializeSimulation();
     void runSimulation();
 
     void displayRegionPopulation(); //for debugging

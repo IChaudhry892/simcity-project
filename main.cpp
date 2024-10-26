@@ -5,7 +5,11 @@ using namespace std;
 int main(){
     SimCity city;
     
-    city.intializeSimulation();
+    if (!city.intializeSimulation()){
+        cout << "[ERROR] Simulation initialization failed. Exiting program." << endl;
+        return -1;
+    }
+
     city.runSimulation();
 
 

@@ -23,7 +23,7 @@ bool SimCity::readConfigFile(){
 
     ifstream configFile(configFileName);
     if (!configFile.is_open()){
-        cout << "Could not open config file: " << configFileName << "." << endl;
+        cout << "[ERROR] Could not open config file: " << configFileName << "." << endl;
         return false;
     }
     if (configFile.is_open()){
@@ -47,7 +47,7 @@ bool SimCity::readConfigFile(){
 bool SimCity::readRegionInitial(){
     ifstream regionFileStream(regionFile);
     if (!regionFileStream.is_open()){
-        cout << "Could not open region file: " << regionFile << endl;
+        cout << "[ERROR] Could not open region file: " << regionFile << endl;
         return false;
     }
     if (regionFileStream.is_open()){
@@ -233,15 +233,15 @@ void SimCity::displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRi
     }
 }
 
-void SimCity::intializeSimulation(){
+bool SimCity::intializeSimulation(){
     if (!readConfigFile()){
-        cout << "Failed to read the config file. Exiting simulation." << endl;
-        return;
+        cout << "[ERROR] Failed to read the config file. Exiting simulation." << endl;
+        return false;
     }
 
     if (!readRegionInitial()){
-        cout << "Failed to read the region layout. Exiting simulation." << endl;
-        return;
+        cout << "[ERROR] Failed to read the region layout. Exiting simulation." << endl;
+        return false;
     }
 
     initializeRegion();
@@ -258,8 +258,9 @@ void SimCity::intializeSimulation(){
     displayRegion();
 
     //for debugging
-    displayRegionPopulation();
-    displayRegionPollution();
+    // displayRegionPopulation();
+    // displayRegionPollution();
+    return true; //returns true on successful initialization
 }
 
 void SimCity::runSimulation(){
