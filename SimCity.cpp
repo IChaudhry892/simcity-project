@@ -12,6 +12,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iomanip>
+#include <limits>
 using namespace std;
 
 SimCity::SimCity() : availableWorkers(0), availableGoods(0) {}
@@ -477,15 +478,12 @@ void SimCity::runSimulation(){
         cout << "| Bottom-right cell = (" << region.size() -1 << "," << region[0].size() - 1 << setw(17) << ")" << "|" << endl;
         cout << "+==========================================+" << endl;
 
-        int topLeftY, topLeftX, bottomRightY, bottomRightX;
-        cout << "\nEnter y-coordinate of top-left corner of desired area (y,x): ";
-        cin >> topLeftY;
-        cout << "Enter x-coordinate of top-left corner of desired area (y,x): ";
-        cin >> topLeftX;
-        cout << "Enter y-coordinate of bottom-right corner of desired area (y,x): ";
-        cin >> bottomRightY;
-        cout << "Enter x-coordinate of bottom-right corner of desired area (y,x): ";
-        cin >> bottomRightX;
+        cout << endl;
+        int topLeftY = getValidCoordinate("Enter y-coordinate of top-left corner of desired area (y,x): ");
+        int topLeftX = getValidCoordinate("Enter x-coordinate of top-left corner of desired area (y,x): ");
+        int bottomRightY = getValidCoordinate("Enter y-coordinate of bottom-right corner of desired area (y,x): ");
+        int bottomRightX = getValidCoordinate("Enter x-coordinate of bottom-right corner of desired area (y,x): ");
+
         if (topLeftY >= 0 && topLeftY < region.size() &&
             topLeftX >= 0 && topLeftX < region[0].size() &&
             bottomRightY >= 0 && bottomRightY < region.size() &&
@@ -721,6 +719,20 @@ int SimCity::getSpecifiedCommercialPopulation(int topLeftY, int topLeftX, int bo
         }
     }
     return totalPop;
+}
+
+int SimCity::getValidCoordinate(const string& prompt){
+    int coordinate;
+    while (true){
+        cout << prompt;
+        if (cin >> coordinate){ //input was an integer
+            return coordinate;
+        }
+        //if input was a non-integer
+        cout << "[ERROR] Invalid input. Please enter a number." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
 }
 
 int SimCity::getAvailableWorkers() const{

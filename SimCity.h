@@ -45,6 +45,7 @@ public:
     int getSpecifiedResidentialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
     int getSpecifiedIndustrialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
     int getSpecifiedCommercialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
+    int getValidCoordinate(const std::string& prompt); //handles error if user inputs a non-integer coordinate
 
     int getAvailableWorkers() const;
     int getAvailableGoods() const;
