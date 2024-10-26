@@ -31,8 +31,7 @@ public:
     void intializeSimulation();
     void runSimulation();
 
-    //for debugging
-    void displayRegionPopulation();
+    void displayRegionPopulation(); //for debugging
     void displayRegionPollution();
 
     void spreadPollution();

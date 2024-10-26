@@ -1,7 +1,6 @@
 #ifndef ZONE_H
 #define ZONE_H
 #include "MapObject.h"
-// #include "SimCity.h"
 #include <vector>
 
 class SimCity; //forward declare SimCity
