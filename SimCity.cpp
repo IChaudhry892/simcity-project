@@ -363,10 +363,10 @@ void SimCity::runSimulation(){
             }
         }
 
-        cout << "**** FOR DEBUGGING ****" << endl;
-        displayRegionPopulation();
-        displayRegionPollution();
-        cout << "**** FOR DEBUGGING ****" << endl;
+        // cout << "**** FOR DEBUGGING ****" << endl;
+        // displayRegionPopulation();
+        // displayRegionPollution();
+        // cout << "**** FOR DEBUGGING ****" << endl;
 
         if (step % refreshRate == 0){
             displayRegion();
