@@ -463,7 +463,23 @@ void SimCity::runSimulation(){
             bottomRightY >= topLeftY && bottomRightX >= topLeftX){
             cout << "\nValid rectanlge. Coordinates are inside bounds of region." << endl;
             //output the map of the specified area
+            cout << "+==========================================+" << endl;
+            cout << "|" << setw(42) << left << "          SPECIFIED REGION STATE" << "|" << endl;
+            cout << "+==========================================+" << endl;
             displaySpecifiedRegion(topLeftY, topLeftX, bottomRightY, bottomRightX);
+
+            int specifiedResidential = getSpecifiedResidentialPopulation(topLeftY, topLeftX, bottomRightY, bottomRightX);
+            int specifiedIndustrial = getSpecifiedIndustrialPopulation(topLeftY, topLeftX, bottomRightY, bottomRightX);
+            int specifiedCommercial = getSpecifiedCommercialPopulation(topLeftY, topLeftX, bottomRightY, bottomRightX);
+            int totalSpecifiedPopulation = specifiedResidential + specifiedIndustrial + specifiedCommercial;
+
+            cout << "+==========================================+" << endl;
+            cout << "|" << setw(42) << left << " SPECIFIED REGION POPULATION TOTALS" << "|" << endl;
+            cout << "|" << " Residential Population: " << setw(17) << left << specifiedResidential << "|" << endl;
+            cout << "|" << " Industrial Population: " << setw(18) << left << specifiedIndustrial << "|" << endl;
+            cout << "|" << " Commercial Population: " << setw(18) << left << specifiedCommercial << "|" << endl;
+            cout << "|" << " Total Region Population: " << setw(16) << left << totalSpecifiedPopulation << "|" << endl;
+            cout << "+==========================================+" << endl;
             break;
         } else{
             cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region or form an invalid rectangle. Please try again." << endl;
@@ -660,6 +676,45 @@ int SimCity::getTotalCommercialPopulation() const{
     int totalPop = 0;
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region[i].size(); j++){
+            CommercialZone* commercialZone = dynamic_cast<CommercialZone*>(region[i][j]);
+            if (commercialZone != nullptr){
+                totalPop += commercialZone->getPopulation();
+            }
+        }
+    }
+    return totalPop;
+}
+
+int SimCity::getSpecifiedResidentialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const{
+    int totalPop = 0;
+    for (int i = topLeftY; i <= bottomRightY; i++){
+        for (int j = topLeftX; j <= bottomRightX; j++){
+            ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
+            if (residentialZone != nullptr){
+                totalPop += residentialZone->getPopulation();
+            }
+        }
+    }
+    return totalPop;
+}
+
+int SimCity::getSpecifiedIndustrialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const{
+    int totalPop = 0;
+    for (int i = topLeftY; i <= bottomRightY; i++){
+        for (int j = topLeftX; j <= bottomRightX; j++){
+            IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
+            if (industrialZone != nullptr){
+                totalPop += industrialZone->getPopulation();
+            }
+        }
+    }
+    return totalPop;
+}
+
+int SimCity::getSpecifiedCommercialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const{
+    int totalPop = 0;
+    for (int i = topLeftY; i <= bottomRightY; i++){
+        for (int j = topLeftX; j <= bottomRightX; j++){
             CommercialZone* commercialZone = dynamic_cast<CommercialZone*>(region[i][j]);
             if (commercialZone != nullptr){
                 totalPop += commercialZone->getPopulation();

@@ -40,6 +40,10 @@ public:
     int getTotalIndustrialPopulation() const;
     int getTotalCommercialPopulation() const;
 
+    int getSpecifiedResidentialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
+    int getSpecifiedIndustrialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
+    int getSpecifiedCommercialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
+
     int getAvailableWorkers() const;
     int getAvailableGoods() const;
     void updateAvailableWorkers(int amount);
