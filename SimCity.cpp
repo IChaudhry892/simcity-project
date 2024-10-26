@@ -202,6 +202,37 @@ void SimCity::displaySpecifiedRegion(int topLeftY, int topLeftX, int bottomRight
     }
 }
 
+void SimCity::displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX){
+    cout << "Specified Region Pollution Map:" << endl;
+
+    //print x-axis numbers
+    cout << "    ";
+    for (int j = topLeftX; j <= bottomRightX; j++){
+        cout << j << "       ";
+    }
+    cout << endl;
+    
+    cout << "   ";
+    for (int j = topLeftX; j <= bottomRightX; j++){
+        cout << "--------";
+    }
+    cout << endl;
+
+    //print region and y-axis numbers
+    for (int i = topLeftY; i <= bottomRightY; i++){
+        cout << i << " | ";
+        for (int j = topLeftX; j <= bottomRightX; j++){
+            MapObject* cell = region[i][j];
+            if (cell != nullptr){
+                cout << cell->getType() << "(" << cell ->getPollution() << ")       ";
+            } else{
+                cout << "        ";
+            }
+        }
+        cout << endl;
+    }
+}
+
 void SimCity::intializeSimulation(){
     if (!readConfigFile()){
         cout << "Failed to read the config file. Exiting simulation." << endl;
@@ -480,6 +511,16 @@ void SimCity::runSimulation(){
             cout << "|" << " Commercial Population: " << setw(18) << left << specifiedCommercial << "|" << endl;
             cout << "|" << " Total Region Population: " << setw(16) << left << totalSpecifiedPopulation << "|" << endl;
             cout << "+==========================================+" << endl;
+
+            cout << "\n+==========================================+" << endl;
+            cout << "|" << setw(42) << left << "     SPECIFIED REGION POLLUTION STATE" << "|" << endl;
+            cout << "+==========================================+" << endl;
+            //display specified region pollution
+            displaySpecifiedPollution(topLeftY, topLeftX, bottomRightY, bottomRightX);
+            //output specified region's total pollution
+            cout << "+==========================================+" << endl;
+            cout << "|" << " Total Pollution: " << setw(24) << left << getSpecifiedPollution(topLeftY, topLeftX, bottomRightY, bottomRightX) << "|" << endl;
+            cout << "+==========================================+" << endl;
             break;
         } else{
             cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region or form an invalid rectangle. Please try again." << endl;
@@ -683,6 +724,19 @@ int SimCity::getTotalCommercialPopulation() const{
         }
     }
     return totalPop;
+}
+
+int SimCity::getSpecifiedPollution(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const{
+    int totalPollution = 0;
+    for (int i = topLeftY; i < bottomRightY; i++){
+        for (int j = topLeftX; j < bottomRightX; j++){
+            MapObject* cell = dynamic_cast<MapObject*>(region[i][j]);
+            if (cell != nullptr){
+                totalPollution += cell->getPollution();
+            }
+        }
+    }
+    return totalPollution;
 }
 
 int SimCity::getSpecifiedResidentialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const{

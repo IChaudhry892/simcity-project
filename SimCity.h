@@ -27,6 +27,7 @@ public:
     void displayRegion();
     void displayFinalRegion();
     void displaySpecifiedRegion(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX);
+    void displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX);
     void intializeSimulation();
     void runSimulation();
 
@@ -40,6 +41,7 @@ public:
     int getTotalIndustrialPopulation() const;
     int getTotalCommercialPopulation() const;
 
+    int getSpecifiedPollution(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
     int getSpecifiedResidentialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
     int getSpecifiedIndustrialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
     int getSpecifiedCommercialPopulation(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const;
