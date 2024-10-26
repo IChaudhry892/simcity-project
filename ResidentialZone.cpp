@@ -65,17 +65,15 @@ int ResidentialZone::evaluateGrowth(std::vector<std::vector<MapObject*>>& region
     bool PowerlineAdjacent = PowerlineAdjacentCheck(x, y, region); //check if adjacent to powerline
 
     //for debugging
-    cout << "Zone at (" << x << ", " << y << ") - Population: " << population
-         << ", adjPop1: " << adjPop1
-         << ", PowerlineAdjacent: " << PowerlineAdjacent << endl;
+    // cout << "**** FOR DEBUGGING ****" << endl;
+    // cout << "Zone at (" << x << ", " << y << ") - Population: " << population
+    //      << ", adjPop1: " << adjPop1
+    //      << ", PowerlineAdjacent: " << PowerlineAdjacent << endl;
+    // cout << "**** FOR DEBUGGING ****" << endl;
 
     int newPopulation = population;
 
-    // if (population == 0 && (PowerlineAdjacent || adjPop1 >= 1)){
-    //     setPopulation(1);
-    if (population == 0 && PowerlineAdjacent){
-        newPopulation = 1;
-    } else if (population == 0 && adjPop1 >= 1){
+    if (population == 0 && (PowerlineAdjacent || adjPop1 >= 1)){
         newPopulation = 1;
     } else if (population == 1 && adjPop1 >= 2){
         newPopulation = 2;

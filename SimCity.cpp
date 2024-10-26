@@ -381,10 +381,8 @@ void SimCity::runSimulation(){
                 }
             }
         }
-        //update availableWorkers if the residential zones' population increased
-        // if (newAvailableWorkers > oldAvailableWorkers){ //this if statement might be unnecessary, workers could decrease as well
-            updateAvailableWorkers(newAvailableWorkers - oldAvailableWorkers);
-        // }
+        //update availableWorkers
+        updateAvailableWorkers(newAvailableWorkers - oldAvailableWorkers);
 
         //count availableGoods after growth
         int newAvailableGoods = 0;
@@ -396,7 +394,7 @@ void SimCity::runSimulation(){
                 }
             }
         }
-        //update availableGoods if the industrial zones' population increased
+        //update availableGoods
         updateAvailableGoods(newAvailableGoods - oldAvailableGoods);
 
         cout << "+==========================================+" << endl;
@@ -464,7 +462,7 @@ void SimCity::runSimulation(){
     cout << "|" << " Total Pollution: " << setw(24) << left << getTotalPollution() << "|" << endl;
     cout << "+==========================================+" << endl;
 
-    //prompt user for coordinates of a rectangular region in the city until they enter a valid region, while loop?
+    //prompt user for coordinates of a rectangular region in the city until they enter a valid region
     while (true){
         cout << "\n+==========================================+" << endl;
         cout << "|" << setw(42) << left << " ANALYSIS OF DESIRED AREA" << "|" << endl;
@@ -526,12 +524,6 @@ void SimCity::runSimulation(){
             cout << "\n[ERROR] Invalid rectangle. Coordinates are outside bounds of region or form an invalid rectangle. Please try again." << endl;
         }
     }
-
-    //get then output the total zone populations of the specified area
-
-    //output the pollution map of the specified area?
-    //get then output the total pollution of the specified area
-
 }
 
 void SimCity::displayRegionPopulation(){
@@ -574,19 +566,7 @@ void SimCity::displayRegionPollution(){
 }
 
 void SimCity::spreadPollution(){
-    //create a grid to store industrial zone pollution values
-    // vector<vector<int>> pollutionMap(region.size(), vector<int>(region[0].size(), 0));
-
-    // //add industrial zone population to pollutionMap
-    // for (int i = 0; i < region.size(); i++){
-    //     for (int j = 0; j < region[i].size(); j++){
-    //         IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
-    //         if (industrialZone != nullptr){
-    //             pollutionMap[i][j] = industrialZone->getPopulation();
-    //         }
-    //     }
-    // }
-    //new approach, modify actual regions pollution values instead of making a separate grid
+    //modify actual region's pollution values to create an initial pollution state
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region[i].size(); j++){
             MapObject* cell = region[i][j];
@@ -602,46 +582,10 @@ void SimCity::spreadPollution(){
     //for debugging
     // cout << "**** FOR DEBUGGING ****" << endl;
     // cout << "INITIAL POLLUTION MAP:" << endl;
-    // for (int i = 0; i < region.size(); i++){
-    //     for (int j = 0; j < region[i].size(); j++){
-    //         int cell = pollutionMap[i][j];
-    //         cout << cell << "\t";
-    //     }
-    //     cout << endl;
-    // }
+    // displayRegionPollution();
     // cout << "**** FOR DEBUGGING ****" << endl;
-    cout << "**** FOR DEBUGGING ****" << endl;
-    cout << "INITIAL POLLUTION MAP:" << endl;
-    displayRegionPollution();
-    cout << "**** FOR DEBUGGING ****" << endl;
 
     //spread pollution
-    // for (int i = 0; i < region.size(); i++){
-    //     for (int j = 0; j < region[i].size(); j++){
-    //         if (pollutionMap[i][j] > 0){ //if this cell is polluted
-    //             int pollutionSource = pollutionMap[i][j];
-
-    //             //check all adjacent cells
-    //             for (int i2 = -1; i2 <= 1; i2++){
-    //                 for (int j2 = -1; j2 <= 1; j2++){
-    //                     if (i2 == 0 && j2 == 0) continue;
-    //                     int adjX = i + i2;
-    //                     int adjY = j + j2;
-    //                     //check if adjacent cell is within bounds
-    //                     if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
-    //                         MapObject* adjacentCell = region[adjX][adjY];
-    //                         if (adjacentCell != nullptr){
-    //                             int spreadPollution = pollutionSource - 1; //pollution around source is 1 less than pollution at source
-    //                             if (spreadPollution > adjacentCell->getPollution()){
-    //                                 adjacentCell->setPollution(spreadPollution);
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
     for (int i = 0; i < region.size(); i++){
         for (int j = 0; j < region[i].size(); j++){
             MapObject* cell = region[i][j];
@@ -654,11 +598,11 @@ void SimCity::spreadPollution(){
                     for (int i2 = -1; i2 <= 1; i2++){
                         for (int j2 = -1; j2 <= 1; j2++){
                             if (i2 == 0 && j2 == 0) continue;
-                            int adjX = i + i2; //checks cells above and below i, i is y-coordinate
-                            int adjY = j + j2; //checks cells to the left and right of j, j is x-coordinate
+                            int adjY = i + i2; //checks cells above and below i, i is y-coordinate
+                            int adjX = j + j2; //checks cells to the left and right of j, j is x-coordinate
                             //check if adjacent cell is within bounds
-                            if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
-                                MapObject* adjacentCell = region[adjX][adjY];
+                            if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){
+                                MapObject* adjacentCell = region[adjY][adjX];
                                 if (adjacentCell != nullptr){
                                     int spreadPollution = sourcePollution - 1; //pollution around source is 1 less than pollution at source
                                     if (spreadPollution > adjacentCell->getPollution()){

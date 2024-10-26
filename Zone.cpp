@@ -10,10 +10,10 @@ int Zone::CountAdjacent(int x, int y, std::vector<std::vector<MapObject*>>& regi
     for (int i = -1; i <= 1; i++){
         for (int j = -1; j <= 1; j++){
             if (i == 0 && j == 0) continue;
-            int adjX = x + i; //checks cells above and below i, i is y-coordinate
-            int adjY = y + j; //checks cells to the left and right of j, j is x-coordinate
-            if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
-                Zone* adjacentZone = dynamic_cast<Zone*>(region[adjX][adjY]);
+            int adjY = x + i; //checks cells above and below i, i is y-coordinate
+            int adjX = y + j; //checks cells to the left and right of j, j is x-coordinate
+            if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){
+                Zone* adjacentZone = dynamic_cast<Zone*>(region[adjY][adjX]);
                 if (adjacentZone && adjacentZone->getPopulation() >= minPopulation){
                     adjPopulationCount++;
                 }
@@ -27,10 +27,10 @@ bool Zone::PowerlineAdjacentCheck(int x, int y, std::vector<std::vector<MapObjec
     for (int i = -1; i <= 1; i++){
         for (int j = -1; j <= 1; j++){
             if (i == 0 && j == 0) continue;
-            int adjX = x + i; //checks cells above and below i, i is y-coordinate
-            int adjY = y + j; //checks cells to the left and right of j, j is x-coordinate
-            if (adjX >= 0 && adjX < region.size() && adjY >= 0 && adjY < region[0].size()){
-                MapObject* adjacent = region[adjX][adjY];
+            int adjY = x + i; //checks cells above and below i, i is y-coordinate
+            int adjX = y + j; //checks cells to the left and right of j, j is x-coordinate
+            if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){
+                MapObject* adjacent = region[adjY][adjX];
                 if (adjacent != nullptr && (adjacent->getType() == 'T' || adjacent->getType() == '#')){
                     return true;
                 }
