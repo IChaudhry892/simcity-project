@@ -224,9 +224,9 @@ void SimCity::displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRi
         for (int j = topLeftX; j <= bottomRightX; j++){
             MapObject* cell = region[i][j];
             if (cell != nullptr){
-                cout << cell->getType() << "(" << cell ->getPollution() << ")       ";
+                cout << cell->getType() << "(" << cell ->getPollution() << ")    ";
             } else{
-                cout << "        ";
+                cout << "     ";
             }
         }
         cout << endl;
@@ -728,8 +728,8 @@ int SimCity::getTotalCommercialPopulation() const{
 
 int SimCity::getSpecifiedPollution(int topLeftY, int topLeftX, int bottomRightY, int bottomRightX) const{
     int totalPollution = 0;
-    for (int i = topLeftY; i < bottomRightY; i++){
-        for (int j = topLeftX; j < bottomRightX; j++){
+    for (int i = topLeftY; i <= bottomRightY; i++){
+        for (int j = topLeftX; j <= bottomRightX; j++){
             MapObject* cell = dynamic_cast<MapObject*>(region[i][j]);
             if (cell != nullptr){
                 totalPollution += cell->getPollution();
