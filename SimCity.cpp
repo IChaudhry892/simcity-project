@@ -226,7 +226,7 @@ void SimCity::displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRi
             if (cell != nullptr){
                 cout << cell->getType() << "(" << cell ->getPollution() << ")    ";
             } else{
-                cout << "     ";
+                cout << "        ";
             }
         }
         cout << endl;
@@ -736,4 +736,16 @@ void SimCity::updateAvailableWorkers(int amount){
 
 void SimCity::updateAvailableGoods(int amount){
     availableGoods += amount;
+}
+
+SimCity::~SimCity(){
+    for (int i = 0; i < region.size(); i++){
+        for (int j = 0; j < region[i].size(); j++){
+            if(region[i][j] != nullptr){
+                delete region[i][j];
+                region[i][j] = nullptr;
+            }
+        }
+    }
+    region.clear();
 }

@@ -17,6 +17,7 @@ class SimCity{
 
 public:
     SimCity();
+    ~SimCity();
 
     bool readConfigFile();
     bool readRegionInitial();

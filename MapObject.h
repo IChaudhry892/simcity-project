@@ -14,6 +14,8 @@ public:
 
     int getPollution() const;
     void setPollution(int p);
+
+    virtual ~MapObject() = default;
 };
 
 #endif
