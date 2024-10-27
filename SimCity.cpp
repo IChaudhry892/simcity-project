@@ -78,7 +78,7 @@ std::vector<std::vector<char>> SimCity::getRegionLayout(){
     return regionLayout;
 }
 
-std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){
+std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){ //uses characters from regionLayout to make the city and store it in region
     for (int i = 0; i < regionLayout.size(); i++){
         vector<MapObject*> regionRow;
         for (int j = 0; j < regionLayout[i].size(); j++){
@@ -128,7 +128,7 @@ void SimCity::displayRegion(){
     }
 }
 
-void SimCity::displayFinalRegion(){
+void SimCity::displayFinalRegion(){ //displays region with x and y axes
     cout << "Region Map:" << endl;
     //print x-axis numbers
     cout << "    ";
@@ -369,7 +369,7 @@ void SimCity::runSimulation(){
         // displayRegionPollution();
         // cout << "**** FOR DEBUGGING ****" << endl;
 
-        if (step % refreshRate == 0){
+        if (step % refreshRate == 0){ //only displays region every refresh rate
             displayRegion();
         }
 
@@ -484,6 +484,7 @@ void SimCity::runSimulation(){
         int bottomRightY = getValidCoordinate("Enter y-coordinate of bottom-right corner of desired area (y,x): ");
         int bottomRightX = getValidCoordinate("Enter x-coordinate of bottom-right corner of desired area (y,x): ");
 
+        //check if the coordinates are in the bounds of the region
         if (topLeftY >= 0 && topLeftY < region.size() &&
             topLeftX >= 0 && topLeftX < region[0].size() &&
             bottomRightY >= 0 && bottomRightY < region.size() &&
@@ -603,7 +604,7 @@ void SimCity::spreadPollution(){
                             if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){
                                 MapObject* adjacentCell = region[adjY][adjX];
                                 if (adjacentCell != nullptr){
-                                    int spreadPollution = sourcePollution - 1; //pollution around source is 1 less than pollution at source
+                                    int spreadPollution = sourcePollution - 1; //pollution around source is set to 1 less than pollution at source
                                     if (spreadPollution > adjacentCell->getPollution()){
                                         adjacentCell->setPollution(spreadPollution);
                                     }

@@ -37,5 +37,5 @@ int CommercialZone::evaluateGrowth(std::vector<std::vector<MapObject*>>& region,
         city.updateAvailableGoods(-1);
     }
 
-    return newPopulation;
+    return newPopulation; //this is how much this zone's population should be at the end of the current time step
 }
