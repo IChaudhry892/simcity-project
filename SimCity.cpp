@@ -574,25 +574,42 @@ void SimCity::spreadPollution(){
                 IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(cell);
                 if (industrialZone != nullptr){
                     cell->setPollution(industrialZone->getPopulation());
+                } else{
+                    cell->setPollution(0); //non-industrial cells should start with 0 pollution
                 }
             }
         }
     }
 
-    //for debugging
-    // cout << "**** FOR DEBUGGING ****" << endl;
-    // cout << "INITIAL POLLUTION MAP:" << endl;
-    // displayRegionPollution();
-    // cout << "**** FOR DEBUGGING ****" << endl;
+    // for debugging
+    cout << "**** FOR DEBUGGING ****" << endl;
+    cout << "INITIAL POLLUTION MAP:" << endl;
+    displayRegionPollution();
+    cout << "**** FOR DEBUGGING ****" << endl;
 
-    //spread pollution
-    for (int i = 0; i < region.size(); i++){
-        for (int j = 0; j < region[i].size(); j++){
-            MapObject* cell = region[i][j];
-            if (cell != nullptr){
-                IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(cell);
-                if (industrialZone != nullptr && industrialZone->getPopulation() > 0){ //if this cell is polluted
-                    int sourcePollution = industrialZone->getPopulation(); //pollution starts at these cells
+    //create a temporary grid to store new pollution values
+    vector<vector<int>> newPollution(region.size(), vector<int>(region[0].size(), 0));
+
+    //pollution needs to spread more than once,
+    //a maximum of 3 times b/c an industrial zone's max population is 3
+    const int SPREAD_ITERATIONS = 3;
+
+    for (int iteration = 0; iteration < SPREAD_ITERATIONS; iteration++){
+        //copy initial pollution state to temporary grid
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[0].size(); j++){
+                if (region[i][j] != nullptr){
+                    newPollution[i][j] = region[i][j]->getPollution();
+                }
+            }
+        }
+
+        //get new pollution values
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[0].size(); j++){
+                MapObject* cell = region[i][j];
+                if (cell != nullptr && cell->getPollution() > 0){
+                    int sourcePollution = cell->getPollution();
 
                     //check all adjacent cells
                     for (int i2 = -1; i2 <= 1; i2++){
@@ -605,13 +622,22 @@ void SimCity::spreadPollution(){
                                 MapObject* adjacentCell = region[adjY][adjX];
                                 if (adjacentCell != nullptr){
                                     int spreadPollution = sourcePollution - 1; //pollution around source is set to 1 less than pollution at source
-                                    if (spreadPollution > adjacentCell->getPollution()){
-                                        adjacentCell->setPollution(spreadPollution);
+                                    if (spreadPollution > newPollution[adjY][adjX]){
+                                        newPollution[adjY][adjX] = spreadPollution;
                                     }
                                 }
                             }
                         }
                     }
+                }
+            }
+        }
+
+        //update actual region with new pollution values
+        for (int i = 0; i < region.size(); i++){
+            for (int j = 0; j < region[0].size(); j++){
+                if (region[i][j] != nullptr){
+                    region[i][j]->setPollution(newPollution[i][j]);
                 }
             }
         }
