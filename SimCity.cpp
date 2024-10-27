@@ -582,10 +582,10 @@ void SimCity::spreadPollution(){
     }
 
     // for debugging
-    cout << "**** FOR DEBUGGING ****" << endl;
-    cout << "INITIAL POLLUTION MAP:" << endl;
-    displayRegionPollution();
-    cout << "**** FOR DEBUGGING ****" << endl;
+    // cout << "**** FOR DEBUGGING ****" << endl;
+    // cout << "INITIAL POLLUTION MAP:" << endl;
+    // displayRegionPollution();
+    // cout << "**** FOR DEBUGGING ****" << endl;
 
     //create a temporary grid to store new pollution values
     vector<vector<int>> newPollution(region.size(), vector<int>(region[0].size(), 0));
