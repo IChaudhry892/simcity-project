@@ -77,7 +77,7 @@ I,I,I,-,C,C,T,/
   - Time-step based simulation
   - Available workers tracking
   - Available goods tracking
-  - Pollution simulation and separated
+  - Pollution simulation and spread
   - Region analysis
 
 4. Visualization:
