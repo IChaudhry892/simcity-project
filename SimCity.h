@@ -12,8 +12,8 @@ class SimCity{
     int availableWorkers;
     int availableGoods;
 
-    std::vector<std::vector<char>> regionLayout;
-    std::vector<std::vector<MapObject*>> region;
+    std::vector<std::vector<char>> regionLayout; // Character grid used to create the main region grid
+    std::vector<std::vector<MapObject*>> region; // Main region grid
 
 public:
     SimCity();
