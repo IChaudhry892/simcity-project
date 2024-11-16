@@ -5,17 +5,18 @@
 using namespace std;
 
 //hasOccured should be initialized to false
-Earthquake::Earthquake() : hasOccurred(false), magnitude(0.0) {}
+Earthquake::Earthquake() : hasOccurred(false), magnitude(0.0) {
+    srand(time(NULL)); //seed the random number generator
+}
 
 //Return false if hasOccured is true
 bool Earthquake::checkForEarthquake(){
     //***COMMENTED OUT FOR DEBUGGING***
-    // if (hasOccurred){
-    //     return false;
-    // }
+    if (hasOccurred){
+        return false;
+    }
 
     //If hasOccured was false, generate a random number between 1 and 100 to determine the earthquake's magnitude
-    srand(time(NULL)); //seed the random number generator
     double randomNumber = (static_cast<double>(rand()) / RAND_MAX * 100.0); //generates a random number 0-100 (inclusive)
 
     //***FOR DEBUGGING***

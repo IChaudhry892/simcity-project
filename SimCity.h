@@ -16,7 +16,7 @@ class SimCity{
     std::vector<std::vector<char>> regionLayout; // Character grid used to create the main region grid
     std::vector<std::vector<MapObject*>> region; // Main region grid
 
-    Earthquake earthquake; //member for the earthquake class
+    Earthquake earthquake; //creates an Earthquake object with the default construtor (hasOccured is false, magnitude is 0.0)
 
 public:
     SimCity();
