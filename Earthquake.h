@@ -8,18 +8,18 @@ private:
 
     /*Probabilities for each magnitude (percentages)
     Magnitude9.5 = 1.0
-    Magnitude7.5 = 12.3
-    Magnitude7.0 = 20.3
-    Magnitude6.7 = 30.1
+    Magnitude7.5 = 6.1
+    Magnitude7.0 = 10.2
+    Magnitude6.7 = 15.0
     */
     
     //Cumulative probabilities
     //If the random number is <= a magnitude's threshold, the earthquake will be of that magnitude
     //static const b/c the threshold values should stay constant
     static constexpr double MAGNITUDE_95_THRESHOLD = 1.0;
-    static constexpr double MAGNITUDE_75_THRESHOLD = 13.3;
-    static constexpr double MAGNITUDE_70_THRESHOLD = 33.6;
-    static constexpr double MAGNITUDE_67_THRESHOLD = 63.7;
+    static constexpr double MAGNITUDE_75_THRESHOLD = 7.1;
+    static constexpr double MAGNITUDE_70_THRESHOLD = 17.3;
+    static constexpr double MAGNITUDE_67_THRESHOLD = 32.3;
 
 public:
     Earthquake(); //default constructor

@@ -3,6 +3,7 @@
 
 #include "MapObject.h"
 #include "Zone.h"
+#include "Earthquake.h"
 #include <vector>
 #include <string>
 class SimCity{
@@ -14,6 +15,8 @@ class SimCity{
 
     std::vector<std::vector<char>> regionLayout; // Character grid used to create the main region grid
     std::vector<std::vector<MapObject*>> region; // Main region grid
+
+    Earthquake earthquake; //member for the earthquake class
 
 public:
     SimCity();

@@ -274,6 +274,11 @@ void SimCity::runSimulation(){
         cout << "|" << " Available Goods: " << setw(24) << left << availableGoods << "|" << endl;
         cout << "+==========================================+" << endl;
 
+        //check if earthquake has occurred
+        if (earthquake.checkForEarthquake()){
+            cout << "An earthquake of magnitude " << earthquake.getMagnitude() << " has occurred!" << endl;
+        }
+
         //need to stop time steps when citys tops growing
         bool growthOccurred = false; //set true if population of zones changed
 
