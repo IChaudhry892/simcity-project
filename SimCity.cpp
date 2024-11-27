@@ -255,6 +255,45 @@ void SimCity::displayCityDestruction(){
         countdown--;
     }
 
+    //Display city destruction
+    for (int i = 0; i <= region.size(); i++){
+        //Clear the screen before display each level of destruction
+        for (int i = 0; i < 50; i++){
+            cout << endl;
+        }
+
+        //Display the current level of destruction
+        for (int m = 0; m < i; m++){
+            for (int n = 0; n < region[0].size(); n++){
+                cout << "X\t";
+            }
+            cout << endl;
+        }
+
+        //Display the remaning city below the X's
+        for (int j = i; j < region.size(); j++){
+            for (int k = 0; k < region[j].size(); k++){
+                MapObject* cell = region[j][k];
+                Zone* zone = dynamic_cast<Zone*>(cell);
+                if (zone != nullptr){
+                    if (zone->getPopulation() > 0){
+                        cout << zone->getPopulation() << "\t";
+                    } else{
+                        cout << zone->getType() << "\t";
+                    }
+                } else if (cell != nullptr){
+                    cout << cell->getType() << "\t";
+                } else{
+                    cout << " \t";
+                }
+            }
+            cout << endl;
+        }
+
+        //Add a delay before outputting each destruction level
+        this_thread::sleep_for(chrono::milliseconds(800));
+    }
+
     cout << "\nCITY COMPLETELY DESTROYED BY MAGNITUDE 9.5 EARTHQUAKE\n" << endl;
     this_thread::sleep_for(chrono::seconds(2));
 }
