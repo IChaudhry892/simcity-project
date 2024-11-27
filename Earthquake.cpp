@@ -1,7 +1,9 @@
 #include "Earthquake.h"
 #include <cstdlib>
 #include <ctime>
-#include <iostream> //***FOR DEBUGGING***
+#include <iostream>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 //hasOccured should be initialized to false
@@ -9,9 +11,10 @@ Earthquake::Earthquake() : hasOccurred(false), magnitude(0.0) {
     srand(time(NULL)); //seed the random number generator
 }
 
-//Return false if hasOccured is true
+//Return true if an earthquake occurs, else return false
 bool Earthquake::checkForEarthquake(){
     //***COMMENTED OUT FOR DEBUGGING***
+    //Return false immediately if hasOccured is true
     if (hasOccurred){
         return false;
     }
@@ -25,18 +28,29 @@ bool Earthquake::checkForEarthquake(){
     if (randomNumber <= MAGNITUDE_95_THRESHOLD){
         magnitude = 9.5;
         hasOccurred = true;
+        cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
+        this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     } else if (randomNumber <= MAGNITUDE_75_THRESHOLD){
-        magnitude = 7.5;
+        // magnitude = 7.5;
+        magnitude = 9.5;
         hasOccurred = true;
+        cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
+        this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     } else if (randomNumber <= MAGNITUDE_70_THRESHOLD){
-        magnitude = 7.0;
+        // magnitude = 7.0;
+        magnitude = 9.5;
         hasOccurred = true;
+        cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
+        this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     } else if (randomNumber <= MAGNITUDE_67_THRESHOLD){
-        magnitude = 6.7;
+        // magnitude = 6.7;
+        magnitude = 9.5;
         hasOccurred = true;
+        cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
+        this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     }
 

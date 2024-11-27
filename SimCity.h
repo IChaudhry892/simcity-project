@@ -38,6 +38,8 @@ public:
     void displayRegionPopulation(); //for debugging
     void displayRegionPollution();
 
+    void displayCityDestruction(); //displays a simple city destruction animation
+
     void spreadPollution();
     int getTotalPollution() const;
     int getTotalResidentialPopulation() const;

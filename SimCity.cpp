@@ -13,6 +13,8 @@
 #include <algorithm>
 #include <iomanip>
 #include <limits>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 SimCity::SimCity() : availableWorkers(0), availableGoods(0) {}
@@ -234,6 +236,29 @@ void SimCity::displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRi
     }
 }
 
+void SimCity::displayCityDestruction(){
+    //Create a bunch of newlines to clear screen
+    for (int i = 0; i < 50; i++){
+        cout << endl;
+    }
+
+    //Show the city right before the earthquake
+    displayRegion();
+    cout << "\nCITY DESTRUCTION IMMINENT...\n" << endl;
+    // this_thread::sleep_for(chrono::seconds(2));
+    //Countdown starting at 3
+    int countdown = 3;
+
+    while (countdown >= 1){
+        cout << countdown << "...\n";
+        this_thread::sleep_for(chrono::seconds(1));
+        countdown--;
+    }
+
+    cout << "\nCITY COMPLETELY DESTROYED BY MAGNITUDE 9.5 EARTHQUAKE\n" << endl;
+    this_thread::sleep_for(chrono::seconds(2));
+}
+
 bool SimCity::intializeSimulation(){
     if (!readConfigFile()){
         cout << "[ERROR] Failed to read the config file. Exiting simulation." << endl;
@@ -276,7 +301,15 @@ void SimCity::runSimulation(){
 
         //check if earthquake has occurred
         if (earthquake.checkForEarthquake()){
-            cout << "An earthquake of magnitude " << earthquake.getMagnitude() << " has occurred!" << endl;
+            if (!(earthquake.getMagnitude() == 9.5)){
+                cout << "An earthquake of magnitude " << earthquake.getMagnitude() << " has occurred!" << endl;
+            }
+            //end simulation if the earthquake's magnitude is 9.5
+            else{
+                // cout << "A magnitude 9.5 earthquake has destroyed the city!" << endl;
+                displayCityDestruction();
+                return;
+            }
         }
 
         //need to stop time steps when citys tops growing
