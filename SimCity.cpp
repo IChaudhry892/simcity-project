@@ -339,15 +339,17 @@ void SimCity::runSimulation(){
         cout << "+==========================================+" << endl;
 
         //check if earthquake has occurred
-        if (earthquake.checkForEarthquake()){
-            if (!(earthquake.getMagnitude() == 9.5)){
-                cout << "An earthquake of magnitude " << earthquake.getMagnitude() << " has occurred!" << endl;
-            }
+        if (earthquake.checkForEarthquake(region.size(), region[0].size())){
             //end simulation if the earthquake's magnitude is 9.5
-            else{
-                // cout << "A magnitude 9.5 earthquake has destroyed the city!" << endl;
+            if (earthquake.getMagnitude() == 9.5){
                 displayCityDestruction();
                 return;
+            } else{
+                cout << "An earthquake of magnitude " << earthquake.getMagnitude() << " has occurred!" << endl;
+                //set earthquake center coordinates
+                earthquakeCenterY = earthquake.getCenterY();
+                earthquakeCenterX = earthquake.getCenterX();
+                cout << "Earthquake's center is at coordinates (" << earthquakeCenterY << ", " << earthquakeCenterX << ")" << endl;
             }
         }
 

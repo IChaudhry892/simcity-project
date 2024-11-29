@@ -12,7 +12,7 @@ Earthquake::Earthquake() : hasOccurred(false), magnitude(0.0) {
 }
 
 //Return true if an earthquake occurs, else return false
-bool Earthquake::checkForEarthquake(){
+bool Earthquake::checkForEarthquake(int maxY, int maxX){
     //***COMMENTED OUT FOR DEBUGGING***
     //Return false immediately if hasOccured is true
     if (hasOccurred){
@@ -32,25 +32,34 @@ bool Earthquake::checkForEarthquake(){
         this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     } else if (randomNumber <= MAGNITUDE_75_THRESHOLD){
-        // magnitude = 7.5;
-        magnitude = 9.5;
+        magnitude = 7.5;
         hasOccurred = true;
-        cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
-        this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
+        //Generate random center coordinates
+        centerY = rand() % maxY;
+        centerX = rand() % maxX;
+        // magnitude = 9.5;
+        // cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
+        // this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     } else if (randomNumber <= MAGNITUDE_70_THRESHOLD){
-        // magnitude = 7.0;
-        magnitude = 9.5;
+        magnitude = 7.0;
         hasOccurred = true;
-        cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
-        this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
+        //Generate random center coordinates
+        centerY = rand() % maxY;
+        centerX = rand() % maxX;
+        // magnitude = 9.5;
+        // cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
+        // this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     } else if (randomNumber <= MAGNITUDE_67_THRESHOLD){
-        // magnitude = 6.7;
-        magnitude = 9.5;
+        magnitude = 6.7;
         hasOccurred = true;
-        cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
-        this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
+        //Generate random center coordinates
+        centerY = rand() % maxY;
+        centerX = rand() % maxX;
+        // magnitude = 9.5;
+        // cout << "A CATASTROPHIC MAGNITUDE 9.5 EARTHQUAKE HAS OCCURRED!\n";
+        // this_thread::sleep_for(chrono::seconds(3)); //program sleeps for 3 seconds
         return true;
     }
 
@@ -65,4 +74,12 @@ bool Earthquake::hasEarthquakeOccurred() const{
 
 double Earthquake::getMagnitude() const{
     return magnitude;
+}
+
+int Earthquake::getCenterX() const{
+    return centerX;
+}
+
+int Earthquake::getCenterY() const{
+    return centerY;
 }

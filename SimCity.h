@@ -17,6 +17,8 @@ class SimCity{
     std::vector<std::vector<MapObject*>> region; // Main region grid
 
     Earthquake earthquake; //creates an Earthquake object with the default construtor (hasOccured is false, magnitude is 0.0)
+    int earthquakeCenterX; //the earthquake center's X coordinate
+    int earthquakeCenterY; //the earthquake center's Y coordinate
 
 public:
     SimCity();

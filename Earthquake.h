@@ -5,6 +5,8 @@ class Earthquake{
 private:
     bool hasOccurred; //flag that indicates if an earthquake has already occurred in the simulation
     double magnitude; //the magnitude of the earthquake (6.7, 7.0, 7.5, 9.5)
+    int centerX; //the earthquake center's X coordinate (col)
+    int centerY; //the earthquake center's Y coordinate (row)
 
     /*Probabilities for each magnitude (percentages)
     Magnitude9.5 = 1.0
@@ -23,9 +25,13 @@ private:
 
 public:
     Earthquake(); //default constructor
-    bool checkForEarthquake(); //returns true if earthquake occurs
+    bool checkForEarthquake(int maxY, int maxX); //returns true if earthquake occurs
     bool hasEarthquakeOccurred() const; //returns true if earthquake has occurred in simulation, flase if earthquake has not occured yet
+    
+    //Getters
     double getMagnitude() const; //returns the magnitude of the earthquake
+    int getCenterX() const;
+    int getCenterY() const;
 };
 
 #endif
