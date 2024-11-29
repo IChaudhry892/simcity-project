@@ -41,6 +41,7 @@ public:
     void displayRegionPollution();
 
     void displayCityDestruction(); //displays a simple city destruction animation
+    void applyEarthquakeDamage(double magnitude, int centerY, int centerX); //reduces zone populations in earthquake radius
 
     void spreadPollution();
     int getTotalPollution() const;

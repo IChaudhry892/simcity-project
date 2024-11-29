@@ -298,6 +298,36 @@ void SimCity::displayCityDestruction(){
     this_thread::sleep_for(chrono::seconds(2));
 }
 
+void SimCity::applyEarthquakeDamage(double magnitude, int centerY, int centerX){
+    int radius; //1 for 6.7, 2 for 7.0, 3 for 7.5
+    int populationReduction; //1 for 6.7, 2 for 7.0, 3 for 7.5
+
+    //set radius and populatioinReduction based on magnitude
+    if (magnitude == 7.5){
+        radius = 3; //7x7 area
+        populationReduction = 3;
+    } else if (magnitude == 7.0){
+        radius = 2; //5x5 area
+        populationReduction = 2;
+    } else if (magnitude == 6.7){
+        radius = 1; //3x3 area
+        populationReduction = 1;
+    } else{
+        return;
+    }
+
+    //calculate the earthquake area boundaries & make sure they stay in region bounds
+    int bottomYBound = region.size() - 1;
+    int rightXBound = region[0].size() - 1;
+
+    int topY = max(0, centerY - radius); //if the top is out of bounds, set it to 0
+    int bottomY = min(bottomYBound, centerY + radius); //if the bottom is out of bounds, set it to ROWS - 1
+    int leftX = max(0, centerX - radius); //if the left is out of bounds, set it to 0
+    int rightX = min(rightXBound, centerX + radius); //if the right is out of bounds, set it to COLS - 1
+
+    cout << "Earthquake damage area: (" << topY << ", " << leftX << ") to (" << bottomY << ", " << rightX << ")" << endl;
+}
+
 bool SimCity::intializeSimulation(){
     if (!readConfigFile()){
         cout << "[ERROR] Failed to read the config file. Exiting simulation." << endl;
@@ -350,6 +380,8 @@ void SimCity::runSimulation(){
                 earthquakeCenterY = earthquake.getCenterY();
                 earthquakeCenterX = earthquake.getCenterX();
                 cout << "Earthquake's center is at coordinates (" << earthquakeCenterY << ", " << earthquakeCenterX << ")" << endl;
+                cout << "Earthquake center at coordinates (" << earthquakeCenterY << ", " << earthquakeCenterX << ")" << endl;
+                applyEarthquakeDamage(earthquake.getMagnitude(), earthquakeCenterY, earthquakeCenterX);
             }
         }
 
