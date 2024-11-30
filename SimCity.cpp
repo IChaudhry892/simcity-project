@@ -115,7 +115,10 @@ void SimCity::displayRegion(){
             MapObject* cell = region[i][j];
             Zone* zone = dynamic_cast<Zone*>(cell);
             if (zone != nullptr){
-                if (zone->getPopulation() > 0){
+                if (zone->isNonFunctional()){
+                    cout << zone->getPopulation() << "X\t";
+                }
+                else if (zone->getPopulation() > 0){
                     cout << zone->getPopulation() << "\t";
                 } else{
                     cout << zone->getType() << "\t";
@@ -301,17 +304,21 @@ void SimCity::displayCityDestruction(){
 void SimCity::applyEarthquakeDamage(double magnitude, int centerY, int centerX){
     int radius; //1 for 6.7, 2 for 7.0, 3 for 7.5
     int populationReduction; //1 for 6.7, 2 for 7.0, 3 for 7.5
+    int nonFunctionalTime; //1 for 6.7, 2 for 7.0, 3 for 7.5
 
     //set radius and populatioinReduction based on magnitude
     if (magnitude == 7.5){
         radius = 3; //7x7 area
         populationReduction = 3;
+        nonFunctionalTime = 3;
     } else if (magnitude == 7.0){
         radius = 2; //5x5 area
         populationReduction = 2;
+        nonFunctionalTime = 2;
     } else if (magnitude == 6.7){
         radius = 1; //3x3 area
         populationReduction = 1;
+        nonFunctionalTime = 1;
     } else{
         return;
     }
@@ -337,10 +344,10 @@ void SimCity::applyEarthquakeDamage(double magnitude, int centerY, int centerX){
                 int newPopulation = max(0, oldPopulation - populationReduction);
                 zone->setPopulation(newPopulation);
 
-                //If the oldPopulation was greater than the newPopulation, i.e. the population of a zone was reduced
-                if (oldPopulation > newPopulation){
-                    cout << "Zone at (" << i << ", " << j << ") population reduced from " << oldPopulation << " to " << newPopulation << endl;
-                }
+                //set non-functional time
+                zone->setNonFunctionalTimeSteps(nonFunctionalTime);
+
+                cout << "Zone at (" << i << ", " << j << ") population reduced from " << oldPopulation << " to " << newPopulation << " and will be non-functional for " << nonFunctionalTime << " time steps" << endl;
             }
         }
     }
@@ -534,6 +541,16 @@ void SimCity::runSimulation(){
         }
         //update availableGoods
         updateAvailableGoods(newAvailableGoods - oldAvailableGoods);
+
+        //Decrement the non-functional zone timers
+        for (int i = 0; i < region.size(); i++) {
+            for (int j = 0; j < region[i].size(); j++) {
+                Zone* zone = dynamic_cast<Zone*>(region[i][j]);
+                if (zone != nullptr && zone->isNonFunctional()) {
+                    zone->decrementNonFunctionalTime();
+                }
+            }
+        }
 
         cout << "+==========================================+" << endl;
         cout << "|" << setw(42) << left << " GROWTH RESULTS" << "|" << endl;
