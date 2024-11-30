@@ -19,6 +19,11 @@ void IndustrialZone::setPopulation(int pop){
 }
 
 int IndustrialZone::evaluateGrowth(std::vector<std::vector<MapObject*>>& region, int x, int y, SimCity& city){
+    //If zone is non-functional, the population will not grow
+    if (isNonFunctional()){
+        return population;
+    }
+
     int adjPop1 = CountAdjacent(x, y, region, 1);
     int adjPop2 = CountAdjacent(x, y, region, 2);
 
