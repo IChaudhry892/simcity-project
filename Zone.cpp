@@ -39,3 +39,22 @@ bool Zone::PowerlineAdjacentCheck(int x, int y, std::vector<std::vector<MapObjec
     }
     return false;
 }
+
+int Zone::getNonFunctionalTimeSteps() const{
+    return nonFunctionalTimeSteps;
+}
+
+void Zone::setNonFunctionalTimeSteps(int timeSteps){
+    nonFunctionalTimeSteps = timeSteps;
+}
+
+//return true if nonFunctinonalTimeSteps > 0
+bool Zone::isNonFunctional() const{
+    return nonFunctionalTimeSteps > 0;
+}
+
+void Zone::decrementNonFunctionalTime(){
+    if (nonFunctionalTimeSteps > 0){
+        nonFunctionalTimeSteps--;
+    }
+}
