@@ -326,6 +326,24 @@ void SimCity::applyEarthquakeDamage(double magnitude, int centerY, int centerX){
     int rightX = min(rightXBound, centerX + radius); //if the right is out of bounds, set it to COLS - 1
 
     cout << "Earthquake damage area: (" << topY << ", " << leftX << ") to (" << bottomY << ", " << rightX << ")" << endl;
+
+    //Apply damage to all zones in the earthquake area
+    for (int i = topY; i <= bottomY; i++){
+        for (int j = leftX; j <= rightX; j++){
+            MapObject* cell = region[i][j];
+            Zone* zone = dynamic_cast<Zone*>(cell);
+            if (zone != nullptr){
+                int oldPopulation = zone->getPopulation();
+                int newPopulation = max(0, oldPopulation - populationReduction);
+                zone->setPopulation(newPopulation);
+
+                //If the oldPopulation was greater than the newPopulation, i.e. the population of a zone was reduced
+                if (oldPopulation > newPopulation){
+                    cout << "Zone at (" << i << ", " << j << ") population reduced from " << oldPopulation << " to " << newPopulation << endl;
+                }
+            }
+        }
+    }
 }
 
 bool SimCity::intializeSimulation(){
@@ -376,12 +394,19 @@ void SimCity::runSimulation(){
                 return;
             } else{
                 cout << "An earthquake of magnitude " << earthquake.getMagnitude() << " has occurred!" << endl;
+
+                //display the region before and after the earthquake
+                cout << "Region before earthquake:" << endl;
+                displayRegion();
+
                 //set earthquake center coordinates
                 earthquakeCenterY = earthquake.getCenterY();
                 earthquakeCenterX = earthquake.getCenterX();
-                cout << "Earthquake's center is at coordinates (" << earthquakeCenterY << ", " << earthquakeCenterX << ")" << endl;
                 cout << "Earthquake center at coordinates (" << earthquakeCenterY << ", " << earthquakeCenterX << ")" << endl;
                 applyEarthquakeDamage(earthquake.getMagnitude(), earthquakeCenterY, earthquakeCenterX);
+
+                cout << "Region after earthquake:" << endl;
+                displayRegion();
             }
         }
 
