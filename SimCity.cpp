@@ -19,6 +19,7 @@ using namespace std;
 
 SimCity::SimCity() : availableWorkers(0), availableGoods(0) {}
 
+//Reads the config file for the regionFile, timeLImit, and refreshRate
 bool SimCity::readConfigFile(){
     string configFileName;
     cout << "Enter config file name: ";
@@ -32,13 +33,13 @@ bool SimCity::readConfigFile(){
     if (configFile.is_open()){
         string line;
         while(getline(configFile, line)){
-            if (line.find("Region Layout:") != string::npos){
+            if (line.find("Region Layout:") != string::npos){ //If "Region Layout:" is found in string line
                 regionFile = line.substr(line.find(":") + 2);
             }
-            if (line.find("Time Limit:") != string::npos){
+            if (line.find("Time Limit:") != string::npos){ //If "Time Limit:" is found in string line
                 timeLimit = stoi(line.substr(line.find(":") + 2));
             }
-            if (line.find("Refresh Rate:") != string::npos){
+            if (line.find("Refresh Rate:") != string::npos){ //If "Refresh Rate:" is found in string line
                 refreshRate = stoi(line.substr(line.find(":") + 2));
             }
         }
@@ -55,13 +56,15 @@ bool SimCity::readRegionInitial(){
     }
     if (regionFileStream.is_open()){
         string line;
-        while(getline(regionFileStream, line)){
+        while(getline(regionFileStream, line)){ //reads every line of regionFile
+            //store every line in a vector of chars
             vector<char> row;
             for(char cell : line){
                 if (cell != ' ' && cell != ','){
                     row.push_back(cell);
                 }
             }
+            //push every row to the regionLayout vector
             regionLayout.push_back(row);
 
         }
@@ -82,8 +85,10 @@ std::vector<std::vector<char>> SimCity::getRegionLayout(){
 
 std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){ //uses characters from regionLayout to make the city and store it in region
     for (int i = 0; i < regionLayout.size(); i++){
+        //make a vector of MapObject type for every row of the region
         vector<MapObject*> regionRow;
         for (int j = 0; j < regionLayout[i].size(); j++){
+            //push a new MapObject to the row using the character to determine the type of MapObject
             char cell = regionLayout[i][j];
             if (cell == '-'){
                 regionRow.push_back(new Road());
@@ -103,6 +108,7 @@ std::vector<std::vector<MapObject*>> SimCity::initializeRegion(){ //uses charact
                 regionRow.push_back(nullptr);
             }
         }
+        //push each row to the region 2d vector that stores the main region
         region.push_back(regionRow);
     }
     return region;
@@ -114,8 +120,8 @@ void SimCity::displayRegion(){
         for (int j = 0; j < region[i].size(); j++){
             MapObject* cell = region[i][j];
             Zone* zone = dynamic_cast<Zone*>(cell);
-            if (zone != nullptr){
-                if (zone->isNonFunctional()){
+            if (zone != nullptr){ //if the cell is a zone, display its pop or type if pop is 0
+                if (zone->isNonFunctional()){ //display an X next to a zone's pop to indicate it is non-functional
                     cout << zone->getPopulation() << "X\t";
                 }
                 else if (zone->getPopulation() > 0){
@@ -123,7 +129,7 @@ void SimCity::displayRegion(){
                 } else{
                     cout << zone->getType() << "\t";
                 }
-            } else if (cell != nullptr){
+            } else if (cell != nullptr){ //if the cell isn't a zone, display its type
                 cout << cell->getType() << "\t";
             } else{
                 cout << " \t";
@@ -142,6 +148,7 @@ void SimCity::displayFinalRegion(){ //displays region with x and y axes
     }
     cout << endl;
     
+    //print a line between the x-axis numbers and the region map
     cout << "   ";
     for (int j = 0; j < region[0].size(); j++){
         cout << "--------";
@@ -180,6 +187,7 @@ void SimCity::displaySpecifiedRegion(int topLeftY, int topLeftX, int bottomRight
     }
     cout << endl;
     
+    //print a line between the x-axis numbers and the region map
     cout << "   ";
     for (int j = topLeftX; j <= bottomRightX; j++){
         cout << "--------";
@@ -218,6 +226,7 @@ void SimCity::displaySpecifiedPollution(int topLeftY, int topLeftX, int bottomRi
     }
     cout << endl;
     
+    //print a line between the x-axis numbers and the region map
     cout << "   ";
     for (int j = topLeftX; j <= bottomRightX; j++){
         cout << "--------";
@@ -342,12 +351,13 @@ void SimCity::applyEarthquakeDamage(double magnitude, int centerY, int centerX){
             if (zone != nullptr){
                 int oldPopulation = zone->getPopulation();
                 int newPopulation = max(0, oldPopulation - populationReduction);
-                zone->setPopulation(newPopulation);
 
-                //set non-functional time
+                //set new population and non-functional time
+                zone->setPopulation(newPopulation);
                 zone->setNonFunctionalTimeSteps(nonFunctionalTime);
 
-                cout << "Zone at (" << i << ", " << j << ") population reduced from " << oldPopulation << " to " << newPopulation << " and will be non-functional for " << nonFunctionalTime << " time steps" << endl;
+                //***FOR DEBUGGING***
+                // cout << "Zone at (" << i << ", " << j << ") population reduced from " << oldPopulation << " to " << newPopulation << " and will be non-functional for " << nonFunctionalTime << " time steps" << endl;
             }
         }
     }
@@ -679,6 +689,7 @@ void SimCity::runSimulation(){
     }
 }
 
+//Displays every zone's population next to its type
 void SimCity::displayRegionPopulation(){
     cout << "Region Population Map:" << endl;
     for (int i = 0; i < region.size(); i++){
@@ -703,6 +714,7 @@ void SimCity::displayRegionPopulation(){
     }
 }
 
+//Displays every cell's pollution level next to its type
 void SimCity::displayRegionPollution(){
     cout << "Region Pollution Map:" << endl;
     for (int i = 0; i < region.size(); i++){
@@ -803,7 +815,7 @@ int SimCity::getTotalPollution() const{
         for (int j = 0; j < region[i].size(); j++){
             MapObject* cell = dynamic_cast<MapObject*>(region[i][j]);
             if (cell != nullptr){
-                totalPollution += cell->getPollution();
+                totalPollution += cell->getPollution(); //add every cell's pollution to totalPollution
             }
         }
     }
@@ -816,7 +828,7 @@ int SimCity::getTotalResidentialPopulation() const{
         for (int j = 0; j < region[i].size(); j++){
             ResidentialZone* residentialZone = dynamic_cast<ResidentialZone*>(region[i][j]);
             if (residentialZone != nullptr){
-                totalPop += residentialZone->getPopulation();
+                totalPop += residentialZone->getPopulation(); //add every residentialZone's population to totalPop
             }
         }
     }
@@ -829,7 +841,7 @@ int SimCity::getTotalIndustrialPopulation() const{
         for (int j = 0; j < region[i].size(); j++){
             IndustrialZone* industrialZone = dynamic_cast<IndustrialZone*>(region[i][j]);
             if (industrialZone != nullptr){
-                totalPop += industrialZone->getPopulation();
+                totalPop += industrialZone->getPopulation(); //add every industrialZone's population to totalPop
             }
         }
     }
@@ -842,7 +854,7 @@ int SimCity::getTotalCommercialPopulation() const{
         for (int j = 0; j < region[i].size(); j++){
             CommercialZone* commercialZone = dynamic_cast<CommercialZone*>(region[i][j]);
             if (commercialZone != nullptr){
-                totalPop += commercialZone->getPopulation();
+                totalPop += commercialZone->getPopulation(); //add every commercialZone's population to totalPop
             }
         }
     }
@@ -905,7 +917,7 @@ int SimCity::getValidCoordinate(const string& prompt){
     int coordinate;
     while (true){
         cout << prompt;
-        if (cin >> coordinate){ //input was an integer
+        if (cin >> coordinate){ //if input was an integer
             return coordinate;
         }
         //if input was a non-integer

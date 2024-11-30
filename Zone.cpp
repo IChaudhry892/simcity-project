@@ -6,16 +6,16 @@ Zone::Zone() : MapObject('Z'), population(0) {}
 Zone::Zone(char t, int pop) : MapObject(t), population(pop) {}
 
 int Zone::CountAdjacent(int x, int y, std::vector<std::vector<MapObject*>>& region, int minPopulation){
-    int adjPopulationCount = 0;
+    int adjPopulationCount = 0; //keeps track of how many zones adjacent to the current zone have a popluation of at least minPopulation
     for (int i = -1; i <= 1; i++){
         for (int j = -1; j <= 1; j++){
             if (i == 0 && j == 0) continue;
             int adjY = x + i; //checks cells above and below i, i is y-coordinate
             int adjX = y + j; //checks cells to the left and right of j, j is x-coordinate
-            if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){
+            if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){ //if adjY and adjX are within the bounds of the region
                 Zone* adjacentZone = dynamic_cast<Zone*>(region[adjY][adjX]);
-                if (adjacentZone && adjacentZone->getPopulation() >= minPopulation){
-                    adjPopulationCount++;
+                if (adjacentZone && adjacentZone->getPopulation() >= minPopulation){ //if the adjacentZone has a population >= minPopulation
+                    adjPopulationCount++; //increment adjPopulationCount
                 }
             }
         }
@@ -23,15 +23,15 @@ int Zone::CountAdjacent(int x, int y, std::vector<std::vector<MapObject*>>& regi
     return adjPopulationCount;
 }
 
-bool Zone::PowerlineAdjacentCheck(int x, int y, std::vector<std::vector<MapObject*>>& region){
+bool Zone::PowerlineAdjacentCheck(int x, int y, std::vector<std::vector<MapObject*>>& region){ //returns true if any adjacent cell is a Powerline or RoadPowerline
     for (int i = -1; i <= 1; i++){
         for (int j = -1; j <= 1; j++){
             if (i == 0 && j == 0) continue;
             int adjY = x + i; //checks cells above and below i, i is y-coordinate
             int adjX = y + j; //checks cells to the left and right of j, j is x-coordinate
-            if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){
+            if (adjY >= 0 && adjY < region.size() && adjX >= 0 && adjX < region[0].size()){ //if adjY and adjX are within the bounds of the region
                 MapObject* adjacent = region[adjY][adjX];
-                if (adjacent != nullptr && (adjacent->getType() == 'T' || adjacent->getType() == '#')){
+                if (adjacent != nullptr && (adjacent->getType() == 'T' || adjacent->getType() == '#')){ //if the adjacent cell is a Powerline or RoadPowerline
                     return true;
                 }
             }
@@ -44,13 +44,13 @@ int Zone::getNonFunctionalTimeSteps() const{
     return nonFunctionalTimeSteps;
 }
 
-void Zone::setNonFunctionalTimeSteps(int timeSteps){
+void Zone::setNonFunctionalTimeSteps(int timeSteps){ //sets how long a zone will be non-functional for
     nonFunctionalTimeSteps = timeSteps;
 }
 
 //return true if nonFunctinonalTimeSteps > 0
 bool Zone::isNonFunctional() const{
-    return nonFunctionalTimeSteps > 0;
+    return nonFunctionalTimeSteps > 0; //returns false if nonFunctionalTimeSteps reaches 0
 }
 
 void Zone::decrementNonFunctionalTime(){

@@ -10,7 +10,6 @@ and industrial zones and resource management.
 5. Configuration Guide
 6. Features Implemented
 7. Usage Guide
-8. Error Handling
 
 ## 1. Developers
 - Austin Naftal
@@ -98,6 +97,7 @@ I,I,I,-,C,C,T,/
   - Goods distribution and tracking
   - Pollution simulation and spread
   - Region analysis
+  - Earthquake disaster simulation
 
 4. Visualization:
   - ASCII region map
@@ -123,12 +123,5 @@ I,I,I,-,C,C,T,/
   - View population totals
   - View pollution totals
   - Analyze specific region areas
-
-## 8. Error Handling
-The program handles various errors including:
-  - Invalid/missing config file
-  - Invalid/missing region file
-  - Invalid region coordinates during analysis
-  - Invalid user inputs
 
 Bonus implemented: No
