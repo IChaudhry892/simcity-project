@@ -11,7 +11,7 @@ and industrial zones and resource management.
 6. Features Implemented
 7. Usage Guide
 
-## 1. Developers
+## 1. High-Level Design By:
 - Austin Naftal
 - Ian Jackson
 - Ibrahim Chaudhry
